@@ -1,5 +1,5 @@
 {
-  "name": "asesoriamiento-en-tecnologia",
+  "name": "asesoramiento-en-tecnologia",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -22,7 +22,9 @@
     "@angular/platform-browser-dynamic": "~8.1.2",
     "@angular/router": "~8.1.2",
     "@fortawesome/fontawesome-free": "^5.7.2",
+    "bootstrap": "^4.3.1",
     "express": "^4.16.4",
+    "jquery": "^3.4.1",
     "ngx-gallery": "^5.9.1",
     "path": "^0.12.7",
     "rxjs": "~6.4.0",
