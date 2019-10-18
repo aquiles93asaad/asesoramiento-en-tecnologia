@@ -1,0 +1,34 @@
+<div class="d-flex flex-column justify-content-start pl-4 pb-4 ml-4 pt-2 h-100">
+    <div class="separator-line mb-2"></div>
+    <h2 class="op-font text-light regular-font title mb-3">Encontrá la computadora que buscás</h2>
+    <div class="breadcrumbs accent-text mb-4">{{computerType}} <span *ngIf="step == 2">></span>{{profileChosen}}</div>
+    <div class="card-container d-flex justify-content-center align-items-center flex-grow-1">
+        <div class="p-4 dark-card w-75 h-100 d-flex flex-column">
+            <div *ngIf="step == 1">
+                <h4 class="op-font text-light regular-font text-center mb-4">Primero lo primero</h4>
+                <div class="d-flex justify-content-around flex-grow-1 px-5">
+                    <div *ngFor="let type of types" (click)="chooseType(type.name)"
+                        class="p-3 light-card d-flex flex-column align-items-center justify-content-center big on-hover-box-shadow">
+                        <div class="icon-container d-flex align-items-center justify-content-center">
+                            <img [src]="'../../assets/' + type.image ">
+                        </div>
+                        <div class="op-font text-light regular-font text-center mt-2">{{type.name}}</div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="step == 2" class="h-100 d-flex flex-column">
+                <h4 class="op-font text-light regular-font text-center mb-4">Contanos, ¿qué uso le vas a dar?</h4>
+                <div class="d-flex justify-content-around flex-grow-1 row">
+                    <div *ngFor="let profile of profiles" class="d-flex align-items-center justify-content-center col-4 mb-3">
+                        <div class="d-flex flex-column align-items-center justify-content-center light-card small on-hover-box-shadow" (click)="chooseProfile(profile.name)">
+                            <div class="icon-container d-flex align-items-center justify-content-center">
+                                <img [src]="'../../assets/' + profile.image ">
+                            </div>
+                            <div class="op-font text-light regular-font text-center mt-2">{{profile.name}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

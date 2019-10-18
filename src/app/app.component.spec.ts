@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'asesoriamiento-en-tecnologia'`, () => {
+  it(`should have as title 'asesoramiento-en-tecnologia'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('asesoriamiento-en-tecnologia');
+    expect(app.title).toEqual('asesoramiento-en-tecnologia');
   });
 
   it('should render title in a h1 tag', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to asesoriamiento-en-tecnologia!');
+    expect(compiled.querySelector('h1').textContent).toContain('Welcome to asesoramiento-en-tecnologia!');
   });
 });
