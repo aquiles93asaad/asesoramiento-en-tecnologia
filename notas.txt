@@ -1,0 +1,5 @@
+- agregar un contador de pasos
+- hacer que los pasos sean más binarios (menos opciones por pantalla)
+- cuestionario
+- listado
+- 
