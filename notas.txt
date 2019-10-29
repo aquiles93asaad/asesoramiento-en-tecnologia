@@ -2,4 +2,17 @@
 - hacer que los pasos sean más binarios (menos opciones por pantalla)
 - cuestionario
 - listado
-- 
+- Multiple perfiles
+
+
+IMPORTANTE:
+Logica de elección de PC:
+    - cada pregunta agregará un puntaje a cada especificación de una compu (ram, video, procesador, etc ...)
+    que requiere para que sustantar la opción deseada
+    - por ahora todas las preguntas serán o un choice o Multiple choice.
+    - cada compu tiene que tener un atributo de puntajes adentro del cual tiene por cada especificación un rango de puntos
+    - cuando se termina el wizard, se suman todos los puntos de las respuestas del usuario, agrupados por especificación,
+    y con eso en el back se busca n computadoras que los puntajes de las preguntas entran en los puntajes de estas computadoras
+    - el orden de cual es la mejor compu depende de cuantas especificacones matchea el rango puntajes
+    - si varias compu tienen la misma cantidad de especificacones que matchean ahí se elige la mejor
+    la que tiene más especificacones cerca de su rango menor 
