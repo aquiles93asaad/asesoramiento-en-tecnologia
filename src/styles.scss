@@ -5,44 +5,80 @@ $primary-color: #201830;
 $accent-color: #00FFCB;
 $grey-color: #707070;
 
-.op-font {
-    font-family: 'Segoe UI', 'Open Sans', Tahoma, Geneva, Verdana, sans-serif;
-}
+body {
+    .op-font {
+        font-family: 'Segoe UI', 'Open Sans', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .bold-font {
+        font-weight: 700;
+    }
+    
+    .light-font {
+        font-weight: 300;
+    }
+    
+    .regular-font {
+        font-weight: 400;
+    }
+    
+    .primary-text {
+        color: $primary-color;
+    }
+    
+    .accent-text {
+        color: $accent-color;
+    }
+    
+    .separator-line {
+        width: 50px;
+        height: 2px;
+        background-color: white;
+    }
+    
+    .on-hover-box-shadow:not(:disabled) {
+        -webkit-transition: all 0.25s linear;
+        -moz-transition: all 0.25s linear;
+        -o-transition: all 0.25s linear;
+        transition: all 0.25s linear;
+    
+        &:hover {
+            box-shadow: rgb(0, 0, 0, 1) 0px 4px 8px 0px, rgb(0, 0, 0, 1) 0px 0px 1px 0px;
+            cursor: pointer;
+        }
+    }
 
-.bold-font {
-    font-weight: 700;
-}
+    .mat-stroked-button {
+        width: 250px;
+        border-radius: 20px;
+        border: 1px solid $accent-color !important;
+    }
 
-.light-font {
-    font-weight: 300;
-}
+    @media(min-width: 1024px) and (max-width: 1200px ) {
+        .w-md-100 {
+            width: 100% !important;
+        }
+        
+        .w-md-75 {
+            width: 75% !important;
+        }
 
-.regular-font {
-    font-weight: 400;
-}
+        .w-md-50 {
+            width: 50% !important;
+        }
+    }
 
-.primary-text {
-    color: $primary-color;
-}
+    @media(min-width: 1201px) {
+        .w-lg-100 {
+            width: 100% !important;
+        }
+        
+        .w-lg-75 {
+            width: 75% !important;
+        }
 
-.accent-text {
-    color: $accent-color;
-}
-
-.separator-line {
-    width: 50px;
-    height: 2px;
-    background-color: white;
-}
-
-.on-hover-box-shadow:not(:disabled) {
-    -webkit-transition: all 0.25s linear;
-    -moz-transition: all 0.25s linear;
-    -o-transition: all 0.25s linear;
-    transition: all 0.25s linear;
-
-    &:hover {
-        box-shadow: rgb(0, 0, 0, 1) 0px 4px 8px 0px, rgb(0, 0, 0, 1) 0px 0px 1px 0px;
-        cursor: pointer;
+        .w-lg-50 {
+            width: 50% !important;
+        }
     }
 }

@@ -1,11 +1,5 @@
 @import "~src/styles.scss";
 
-.mat-stroked-button {
-    width: 250px;
-    border-radius: 20px;
-    border: 1px solid $accent-color !important;
-}
-
 .logo {
     img {
         max-width: 250px;
@@ -22,7 +16,7 @@
 
 .computers-image {
     width: 50%;
-    bottom: -20px;
+    bottom: 0px;
     right: 0;
 
     img {

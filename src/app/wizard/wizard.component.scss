@@ -6,41 +6,9 @@
     border-radius: 28px;
 }
 
-.light-card {
-    background-color: rgba($color: $grey-color, $alpha: .3);
-    box-shadow: 0px 3px 10px #000000A6;
-    border-radius: 18px;
-
-    &.big {
-        width: 325px;
-        height: 275px;
-
-        .icon-container {
-            height: 150px;
-            width: 150px;
-        }
-    }
-
-    &.small {
-        width: 200px;
-        height: 150px;
-
-        .icon-container {
-            height: 75px;
-            width: 75px;
-        }
-    }
-
-    &:hover {
-        .icon-container {
-            background-color: $accent-color;
-        }
-    }
-}
-
 .icon-container {
-    height: 75%;
-    width: 75%;
+    height: 16vh;
+    width: 16vh;
     background-color: white;
     border-radius: 50%;
     border: 1px solid $accent-color !important;
@@ -48,5 +16,31 @@
     img {
         max-width: 70%;
         max-height: 70%;
+    }
+
+    &.big {
+        height: 25vh;
+        width: 25vh;
+    }
+
+    &:hover,
+    &.chosen {
+        cursor: pointer;
+        background-color: $accent-color;
+    }
+}
+
+:host ::ng-deep {
+    .mat-progress-bar {
+        height: 10px;
+        border-radius: 20px;
+    
+        .mat-progress-bar-background {
+            width: calc(100% - 5px);
+        }
+    
+        .mat-progress-bar-background {
+            width: calc(100% - 5px);
+        }
     }
 }

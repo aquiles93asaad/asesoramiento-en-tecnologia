@@ -1,14 +1,14 @@
 .main-bg {
     background: url('../assets/bg.png');
-    background-size: 102%;
-    background-position: center center;
+    background-repeat: no-repeat;
+    background-position-x: unset;
+    background-position-y: center;
 
     nav {
         background-color: transparent;
-        height:  56px;
     }
 
     .main-container {
-        height: calc(100% - 56px);
+        height: calc(100% - 86px);
     }
 }

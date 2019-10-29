@@ -228,11 +228,11 @@ $my-theme-foreground: (
     }
 }
 
-$my-typography: mat-typography-config(
-    $font-family: "Nunito Sans"
-);
+// $my-typography: mat-typography-config(
+//     $font-family: "Nunito Sans"
+// );
 
-@include mat-core($my-typography);
+// @include mat-core($my-typography);
 
 // themes for notifications
 $my-theme-info: mat-palette($mat-blue);
@@ -263,5 +263,9 @@ $my-theme: create-my-theme($my-theme-primary, $my-theme-accent, $my-theme-warn);
     @include custom-components-theme($my-theme, $my-theme-info, $my-theme-success, $my-theme-warning, $my-theme-error);
     .mat-ripple {
         background-color: transparent !important;
+    }
+
+    .mat-progress-bar.mat-accent .mat-progress-bar-buffer {
+        background-color: #13101A !important;
     }
 }

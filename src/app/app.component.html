@@ -1,16 +1,21 @@
 <div class="main-bg h-100 w-100">
-    <nav class="navbar navbar-expand-lg navbar-light">
+    <nav class="navbar navbar-expand-lg navbar-light" [ngClass]="{'p-0': router.url === '/'}">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-            </ul>
         </div>
+        <div class="w-100 d-flex flex-column align-items-start mt-3" *ngIf="router.url !== '/'">
+            <div class="separator-line mb-2"></div>
+            <h4 class="op-font text-light regular-font title mb-3">Encontrá la computadora que buscás</h4>
+        </div>
+        <a class="navbar-brand" href="/" *ngIf="router.url !== '/'">
+            <img src="../assets/logo.png" width="100" alt="">
+        </a>
     </nav>
 
-    <div class="main-container position-relative overflow-hidden">
+    <div class="main-container position-relative" [ngClass]="{'h-100': router.url === '/'}">
         <router-outlet></router-outlet>
     </div>
 </div>

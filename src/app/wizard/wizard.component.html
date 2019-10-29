@@ -1,33 +1,45 @@
-<div class="d-flex flex-column justify-content-start pl-4 pb-4 ml-4 pt-2 h-100">
-    <div class="separator-line mb-2"></div>
-    <h2 class="op-font text-light regular-font title mb-3">Encontrá la computadora que buscás</h2>
-    <div class="breadcrumbs accent-text mb-4">{{computerType}} <span *ngIf="step == 2">></span>{{profileChosen}}</div>
+<div class="d-flex flex-column justify-content-start pl-4 pb-4 mx-4 pt-2 h-100">
+    <div class="breadcrumbs accent-text mb-4">{{computerType}} <span *ngIf="step == 2">></span></div>
     <div class="card-container d-flex justify-content-center align-items-center flex-grow-1">
-        <div class="p-4 dark-card w-75 h-100 d-flex flex-column">
-            <div *ngIf="step == 1">
-                <h4 class="op-font text-light regular-font text-center mb-4">Primero lo primero</h4>
-                <div class="d-flex justify-content-around flex-grow-1 px-5">
-                    <div *ngFor="let type of types" (click)="chooseType(type.name)"
-                        class="p-3 light-card d-flex flex-column align-items-center justify-content-center big on-hover-box-shadow">
-                        <div class="icon-container d-flex align-items-center justify-content-center">
+        <div class="p-5 dark-card w-lg-75 w-md-100 d-flex flex-column">
+            <mat-progress-bar class="w-50 mb-3 mx-auto" color="accent" mode="determinate" [value]="progressValue()"
+                bufferValue="75">
+            </mat-progress-bar>
+            <div *ngIf="step === 1" class="d-flex flex-column align-items-center">
+                <h4 class="op-font text-light regular-font mb-4">Contanos, ¿qué uso le vas a dar?</h4>
+                <div class="d-flex justify-content-around flex-grow-1 row w-100">
+                    <div *ngFor="let profile of profiles" (click)="chooseProfile(profile.value)"
+                        class="d-flex flex-column align-items-center justify-content-center col-4 mb-3">
+                        <div class="icon-container d-flex align-items-center justify-content-center"
+                            [ngClass]="{'chosen': chosenProfiles.includes(profile.value)}">
+                            <img [src]="'../../assets/' + profile.image ">
+                        </div>
+                        <div class="op-font text-light regular-font text-center mt-2">{{profile.name}}</div>
+                    </div>
+                </div>
+                <button mat-stroked-button class="start-btn" color="accent" class="op-font text-light light-font mt-4"
+                    (click)="step = 2">Siguiente</button>
+            </div>
+            <div *ngIf="step == 2" class="d-flex flex-column align-items-center">
+                <h4 class="op-font text-light regular-font mb-4">Elegí la opción que más necesites</h4>
+                <div class="d-flex justify-content-around flex-grow-1 row w-100">
+                    <div *ngFor="let type of types" (click)="computerType = type.name"
+                        class="p-3 d-flex flex-column align-items-center justify-content-center col-6 col-md-4 col-lg-3">
+                        <div class="icon-container big d-flex align-items-center justify-content-center"
+                            [ngClass]="{'chosen': computerType === type.name}">
                             <img [src]="'../../assets/' + type.image ">
                         </div>
                         <div class="op-font text-light regular-font text-center mt-2">{{type.name}}</div>
                     </div>
                 </div>
+                <button mat-stroked-button class="start-btn" color="accent" class="op-font text-light light-font mt-4"
+                    (click)="step = 3">Siguiente</button>
             </div>
-            <div *ngIf="step == 2" class="h-100 d-flex flex-column">
+            <div *ngIf="step > 3" class="h-100 d-flex flex-column">
                 <h4 class="op-font text-light regular-font text-center mb-4">Contanos, ¿qué uso le vas a dar?</h4>
-                <div class="d-flex justify-content-around flex-grow-1 row">
-                    <div *ngFor="let profile of profiles" class="d-flex align-items-center justify-content-center col-4 mb-3">
-                        <div class="d-flex flex-column align-items-center justify-content-center light-card small on-hover-box-shadow" (click)="chooseProfile(profile.name)">
-                            <div class="icon-container d-flex align-items-center justify-content-center">
-                                <img [src]="'../../assets/' + profile.image ">
-                            </div>
-                            <div class="op-font text-light regular-font text-center mt-2">{{profile.name}}</div>
-                        </div>
-                    </div>
-                </div>
+
+                <button mat-stroked-button class="start-btn" color="accent" class="op-font text-light light-font"
+                    (click)="step = step + 1">Siguiente</button>
             </div>
         </div>
     </div>
