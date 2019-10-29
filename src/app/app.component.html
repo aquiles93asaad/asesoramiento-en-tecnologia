@@ -1,12 +1,12 @@
-<div class="main-bg h-100 w-100">
+<div class="main-bg h-100 container-fluid">
     <nav class="navbar navbar-expand-lg navbar-light">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-            </ul>
+        <div class="collapse navbar-collapse flex-column justify-content-center align-items-start" id="navbarNav" *ngIf="router.url">
+            <div class="separator-line mb-2"></div>
+            <h2 class="op-font text-light regular-font title mb-3">Encontrá la computadora que buscás</h2>
+            <h2>{{router.url}}</h2>
         </div>
     </nav>
 
