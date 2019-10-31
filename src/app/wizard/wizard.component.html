@@ -1,26 +1,25 @@
 <div class="d-flex flex-column justify-content-start pl-4 pb-4 mx-4 pt-2 h-100">
-    <div class="breadcrumbs accent-text mb-4">{{computerType}} <span *ngIf="step == 2">></span></div>
+    <!-- <div class="breadcrumbs accent-text mb-4">{{computerType}} <span *ngIf="step == 2">></span></div> -->
     <div class="card-container d-flex justify-content-center align-items-center flex-grow-1">
-        <div class="p-5 dark-card w-lg-75 w-md-100 d-flex flex-column">
+        <div class="p-5 dark-card w-lg-75 w-md-100 d-flex flex-column align-items-center position-relative">
             <mat-progress-bar class="w-50 mb-3 mx-auto" color="accent" mode="determinate" [value]="progressValue()"
                 bufferValue="75">
             </mat-progress-bar>
-            <div *ngIf="step === 1" class="d-flex flex-column align-items-center">
+            <a color="accent" class="op-font light-font back-btn" (click)="goBack()">Volver</a>
+            <div *ngIf="step === 1" class="d-flex flex-column align-items-center w-100 flex-grow-1">
                 <h4 class="op-font text-light regular-font mb-4">Contanos, ¿qué uso le vas a dar?</h4>
                 <div class="d-flex justify-content-around flex-grow-1 row w-100">
-                    <div *ngFor="let profile of profiles" (click)="chooseProfile(profile.value)"
+                    <div *ngFor="let profile of profiles" (click)="chooseProfile(profile.name)"
                         class="d-flex flex-column align-items-center justify-content-center col-4 mb-3">
                         <div class="icon-container d-flex align-items-center justify-content-center"
-                            [ngClass]="{'chosen': chosenProfiles.includes(profile.value)}">
-                            <img [src]="'../../assets/' + profile.image ">
+                            [ngClass]="{'chosen': chosenProfiles.includes(profile.name)}">
+                            <img [src]="'../../assets/' + profile.name + '.png' ">
                         </div>
-                        <div class="op-font text-light regular-font text-center mt-2">{{profile.name}}</div>
+                        <div class="op-font text-light regular-font text-center mt-2">{{profile.label}}</div>
                     </div>
                 </div>
-                <button mat-stroked-button class="start-btn" color="accent" class="op-font text-light light-font mt-4"
-                    (click)="step = 2">Siguiente</button>
             </div>
-            <div *ngIf="step == 2" class="d-flex flex-column align-items-center">
+            <div *ngIf="step == 2" class="d-flex flex-column align-items-center w-100 flex-grow-1">
                 <h4 class="op-font text-light regular-font mb-4">Elegí la opción que más necesites</h4>
                 <div class="d-flex justify-content-around flex-grow-1 row w-100">
                     <div *ngFor="let type of types" (click)="computerType = type.name"
@@ -32,15 +31,27 @@
                         <div class="op-font text-light regular-font text-center mt-2">{{type.name}}</div>
                     </div>
                 </div>
-                <button mat-stroked-button class="start-btn" color="accent" class="op-font text-light light-font mt-4"
-                    (click)="step = 3">Siguiente</button>
             </div>
-            <div *ngIf="step > 3" class="h-100 d-flex flex-column">
-                <h4 class="op-font text-light regular-font text-center mb-4">Contanos, ¿qué uso le vas a dar?</h4>
-
-                <button mat-stroked-button class="start-btn" color="accent" class="op-font text-light light-font"
-                    (click)="step = step + 1">Siguiente</button>
+            <div *ngIf="step >= 3" class="h-100 d-flex flex-column w-100 flex-grow-1">
+                <h4 class="op-font text-light regular-font text-center mb-4">Para darte el mejor resultado, contesta
+                    estas simples preguntas:</h4>
+                <form [formGroup]="questionsForm">
+                    <div *ngFor="let formControlGroup of questionsForm.controls">
+                        <div *ngFor="let question of formControlGroup.controls; let i = index">
+                            <mat-form-field>
+                                <mat-label>{{chosenProfiles[getName(formControlGroup)].questions[i].label}}</mat-label>
+                                <mat-select [formControlName]="getName(question)">
+                                    <mat-option *ngFor="let answer of chosenProfiles[getName(formControlGroup)].questions[i].answers" [value]="answer.value">
+                                        {{answer.label}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </form>
             </div>
+            <button mat-stroked-button color="accent" class="op-font text-light light-font mt-4"
+                (click)="goForward()">Siguiente</button>
         </div>
     </div>
 </div>
