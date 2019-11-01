@@ -36,16 +36,20 @@
                 <h4 class="op-font text-light regular-font text-center mb-4">Para darte el mejor resultado, contesta
                     estas simples preguntas:</h4>
                 <form [formGroup]="questionsForm">
-                    <div *ngFor="let formControlGroup of questionsForm.controls">
-                        <div *ngFor="let question of formControlGroup.controls; let i = index">
-                            <mat-form-field>
-                                <mat-label>{{chosenProfiles[getName(formControlGroup)].questions[i].label}}</mat-label>
-                                <mat-select [formControlName]="getName(question)">
-                                    <mat-option *ngFor="let answer of chosenProfiles[getName(formControlGroup)].questions[i].answers" [value]="answer.value">
-                                        {{answer.label}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
+                    <div formArrayName="profileQuestions">
+                        <div *ngFor="let group of profileQuestionsGroup.controls; let i = index; let first = first;" [formGroupName]="i">
+                            <!-- <form [formGroup]="questionsGroups[formControlGroup]" > -->
+                                <div *ngFor="let question of getGroupControlsAsArray(group); let i = index">
+                                    <mat-form-field class="w-100">
+                                        <mat-label>{{profilesObject[getName(group)].questions[i].label}}</mat-label>
+                                        <mat-select [formControlName]="question.name">
+                                            <mat-option *ngFor="let answer of profilesObject[getName(group)].questions[i].answers" [value]="answer.value">
+                                                {{answer.label}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            <!-- </form> -->
                         </div>
                     </div>
                 </form>
