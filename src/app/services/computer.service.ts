@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 @Injectable({
     providedIn: 'root'
 })
-export class UsageProfileService {
+export class ComputerService {
 
     private apiUrl = environment.baseUrl;
     constructor(
@@ -16,11 +16,11 @@ export class UsageProfileService {
 
     search(): Observable<any> {
         const filters = {};
-        return this.http.post(this.apiUrl + 'usage-profile/search', filters).pipe(
+        return this.http.post(this.apiUrl + 'computer/search', filters).pipe(
             map(
                 (data: any) => {
-                    if (data.usageProfiles) {
-                        return data.usageProfiles;
+                    if (data.computers) {
+                        return data.computers;
                     }
                 }
             )

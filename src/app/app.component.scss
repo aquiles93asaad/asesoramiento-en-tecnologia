@@ -1,15 +1,24 @@
 .main-bg {
-    background: url('../assets/bg.png');
-    background-repeat: no-repeat;
-    background-position-x: unset;
-    background-position-y: center;
+    background-image: linear-gradient(to right bottom, #201830, #1f172f, #1e162d, #1d162c, #1c152b, #1b1429, #1a1427, #191325, #171222, #161220, #15111d, #13101a);
     min-height: 100%;
+    // @media screen and (min-width: 922px) {
+    //     background: url('../assets/bg.png');
+    //     background-repeat: no-repeat;
+    //     background-position-x: unset;
+    //     background-position-y: center;
+    //     min-height: 100%;
+    //     background-size: 105%;
+    // }
 
     nav {
         background-color: transparent;
     }
 
     .main-container {
-        height: calc(100% - 86px);
+        height: calc(100% - 40px);
+
+        @media screen and (min-width: 922px) {
+            height: calc(100% - 86px);
+        }
     }
 }

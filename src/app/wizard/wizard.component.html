@@ -5,7 +5,7 @@
             <mat-progress-bar class="w-50 mb-3 mx-auto" color="accent" mode="determinate" [value]="progressValue()"
                 bufferValue="75">
             </mat-progress-bar>
-            <a color="accent" class="op-font light-font back-btn" (click)="goBack()">Volver</a>
+            <a color="accent" class="op-font light-font accent-link back-btn" (click)="goBack()">Volver</a>
             <div *ngIf="step === 1" class="d-flex flex-column align-items-center w-100 flex-grow-1">
                 <h4 class="op-font text-light regular-font mb-4">Contanos, ¿qué uso le vas a dar?</h4>
                 <div class="d-flex justify-content-around flex-grow-1 row w-100">
@@ -33,25 +33,20 @@
                 </div>
             </div>
             <div *ngIf="step >= 3" class="h-100 d-flex flex-column w-100 flex-grow-1">
-                <h4 class="op-font text-light regular-font text-center mb-4">Para darte el mejor resultado, contesta
-                    estas simples preguntas:</h4>
                 <form [formGroup]="questionsForm">
-                    <div formArrayName="profileQuestions">
-                        <div *ngFor="let group of profileQuestionsGroup.controls; let i = index; let first = first;" [formGroupName]="i">
-                            <!-- <form [formGroup]="questionsGroups[formControlGroup]" > -->
-                                <div *ngFor="let question of getGroupControlsAsArray(group); let i = index">
-                                    <mat-form-field class="w-100">
-                                        <mat-label>{{profilesObject[getName(group)].questions[i].label}}</mat-label>
-                                        <mat-select [formControlName]="question.name">
-                                            <mat-option *ngFor="let answer of profilesObject[getName(group)].questions[i].answers" [value]="answer.value">
-                                                {{answer.label}}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </div>
-                            <!-- </form> -->
+                    <form *ngFor="let profileForm of chosenProfiles; let i = index" [formGroup]="questionsForm.get(profileForm)" [hidden]="step !== (i + 3)">
+                        <h4 class="op-font text-light regular-font text-center mb-4">{{profilesObject[profileForm].description}}</h4>
+                        <div *ngFor="let question of profilesObject[profileForm].questions; let j = index">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{profilesObject[profileForm].questions[j].label}}</mat-label>
+                                <mat-select [formControlName]="[profileForm + '_question_' + j]">
+                                    <mat-option *ngFor="let answer of profilesObject[profileForm].questions[j].answers" [value]="answer.value">
+                                        {{answer.label}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
                         </div>
-                    </div>
+                    </form>
                 </form>
             </div>
             <button mat-stroked-button color="accent" class="op-font text-light light-font mt-4"

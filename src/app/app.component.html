@@ -1,11 +1,23 @@
-<div class="main-bg w-100" [ngClass]="{'h-100': router.url === '/'}">
+<div class="main-bg w-100" [ngClass]="{'h-100': router.url === '/' || router.url === '/computers'}">
     <nav class="navbar navbar-expand-lg navbar-light" [ngClass]="{'p-0': router.url === '/'}">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-        </div>
+        <div class="collapse navbar-collapse d-lg-none" id="navbarNav">
+            <a class="navbar-brand" href="#">Hidden brand</a>
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li>
+            </ul>
+        </div> -->
         <div class="w-100 d-flex flex-column align-items-start mt-3" *ngIf="router.url !== '/'">
             <div class="separator-line mb-2"></div>
             <h4 class="op-font text-light regular-font title mb-3">Encontrá la computadora que buscás</h4>
@@ -15,7 +27,7 @@
         </a>
     </nav>
 
-    <div class="main-container position-relative" [ngClass]="{'h-100': router.url === '/'}">
+    <div class="main-container position-relative" [ngClass]="{'h-lg-100': router.url === '/'}">
         <router-outlet></router-outlet>
     </div>
 </div>

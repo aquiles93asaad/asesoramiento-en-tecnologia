@@ -33,12 +33,8 @@
 
 .back-btn {
     position: absolute;
-    color: $accent-color !important;
-    cursor: pointer;
-    text-decoration: underline !important;
     top: 3rem;
     left: 3rem;
-    font-size: 14px;
 }
 
 :host ::ng-deep {

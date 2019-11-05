@@ -14,12 +14,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { WizardComponent } from './wizard/wizard.component';
+import { ComputersComponent } from './computers/computers.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         HomeComponent,
-        WizardComponent
+        WizardComponent,
+        ComputersComponent
     ],
     imports: [
         BrowserModule,

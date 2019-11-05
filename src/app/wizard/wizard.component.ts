@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UsageProfileService } from './../services/usage-profile.service';
+import { UsageProfileService } from '../services/usage-profile.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, FormControl, AbstractControl, FormArray } from '@angular/forms';
 
@@ -11,7 +11,7 @@ import { FormGroup, FormBuilder, FormControl, AbstractControl, FormArray } from 
 export class WizardComponent implements OnInit {
 
     step = 1;
-    allSteps = 4;
+    allSteps = 3;
     computerType = '';
     chosenProfiles: string[] = [];
     profiles: any[] = [];
@@ -52,6 +52,8 @@ export class WizardComponent implements OnInit {
         } else {
             this.chosenProfiles.push(profile);
         }
+
+        this.allSteps = 2 + this.chosenProfiles.length;
     }
 
     goBack() {
@@ -68,11 +70,8 @@ export class WizardComponent implements OnInit {
         } else {
             this.step = this.step + 1;
             if (this.step === 3) {
-                this.profilesQuestions = this.formBuilder.array([]);
-                this.questionsForm = this.formBuilder.group({
-                    profileQuestions: this.formBuilder.array(this.createQuestionsForm())
-                });
-                this.profilesQuestions = this.questionsForm.get('profileQuestions') as FormArray;
+                this.questionsForm = this.formBuilder.group({});
+                this.createFormGroups();
             }
         }
     }
@@ -82,6 +81,24 @@ export class WizardComponent implements OnInit {
     // returns all form groups under profileQuestions
     get profileQuestionsGroup() {
         return this.questionsForm.get('profileQuestions') as FormArray;
+    }
+
+    private createFormGroups() {
+        // tslint:disable-next-line: prefer-for-of
+        for (let i = 0; i < this.chosenProfiles.length; i++) {
+            this.questionsForm.addControl(this.chosenProfiles[i], this.getUsageProfileFormGroup(this.chosenProfiles[i]));
+        }
+    }
+
+    private getUsageProfileFormGroup(profile: string) {
+        const form = this.formBuilder.group({});
+        const questions = this.profilesObject[profile].questions;
+        // tslint:disable-next-line: prefer-for-of
+        for (let i = 0; i < questions.length; i++) {
+            form.addControl(profile + '_question_' + i, new FormControl(''));
+        }
+
+        return form;
     }
 
     getGroupControlsAsArray(control: AbstractControl): any[] {
@@ -96,66 +113,5 @@ export class WizardComponent implements OnInit {
             }
         }
         return controls;
-    }
-
-    private createQuestionsForm(): FormGroup[] {
-        const result: FormGroup[] = [];
-        // this.questionsForm = ;
-        // tslint:disable-next-line: prefer-for-of
-        for (let i = 0; i < this.chosenProfiles.length; i++) {
-            this.questionsGroups[this.chosenProfiles[i]] = this.formBuilder.group({});
-            const profileQuestionsGroup = this.formBuilder.group({});
-            const questions = this.profilesObject[this.chosenProfiles[i]].questions;
-            // tslint:disable-next-line: prefer-for-of
-            for (let j = 0; j < questions.length; j++) {
-                profileQuestionsGroup.addControl(this.chosenProfiles[i] + '_question_' + j, new FormControl(''));
-            }
-            result.push(profileQuestionsGroup);
-            this.profilesQuestions.push(profileQuestionsGroup);
-            //this.questionsForm.addControl(this.chosenProfiles[i], profileQuestionsGroup);
-        }
-        return result;
-    }
-
-    getName(control: AbstractControl): string | null {
-        const group = control.parent as FormGroup;
-
-        if (!group) {
-            return null;
-        }
-
-        let name: string;
-
-        Object.keys(group.controls).forEach(key => {
-            const childControl = group.get(key);
-
-            if (childControl !== control) {
-                return;
-            }
-
-            name = key;
-        });
-
-        return name;
-    }
-
-    // getFormGroup(name: string): FormGroup {
-    //     const group = this.questionsForm.get(name) as FormGroup;
-    //     return group;
-    // }
-
-    getControlsAsArray(controls) {
-        let result = [];
-        // tslint:disable-next-line: forin
-        for (const key in controls) {
-            if (controls.hasOwnProperty(key)) {
-                const item = {
-                    name: key,
-                    control: controls[key]
-                };
-                result.push(item);
-            }
-        }
-        return result;
     }
 }

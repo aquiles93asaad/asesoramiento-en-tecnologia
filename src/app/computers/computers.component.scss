@@ -1,0 +1,55 @@
+
+
+.scroll-parent {
+    background: #241D31 0% 0% no-repeat padding-box;
+    // box-shadow: 0px 0px 10px #000000A6;
+}
+
+.computer-container:first-child,
+.filters-container {
+    background: #16121D 0% 0% no-repeat padding-box;
+    box-shadow: 0px 0px 6px #00000029;
+    border-bottom: none !important;
+}
+
+.computer-container {
+    &:not(:last-of-type) {
+        border-bottom: 1px solid #545454;
+    }
+
+    .best-option {
+        font-size: 24px;
+    }
+    
+    .brand-name {
+        font-size: 32px;
+    }
+    
+    .computer-name {
+        font-size: 34px;
+    }
+    
+    .price-tag {
+        font-size: 20px;
+    }
+    
+    .available-label {
+        font-size: 14px;
+    }
+}
+
+:host ::ng-deep {
+    .mat-progress-bar {
+        height: 10px;
+        width: 300px;
+        border-radius: 20px;
+    
+        .mat-progress-bar-background {
+            width: calc(100% - 5px);
+        }
+    
+        .mat-progress-bar-background {
+            width: calc(100% - 5px);
+        }
+    }
+}

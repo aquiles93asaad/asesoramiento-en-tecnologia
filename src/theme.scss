@@ -1,8 +1,8 @@
 @import "~@angular/material/theming";
 
-$apprendo-pallette: (
+$app-pallette: (
     50: #201830,
-    100: #00FFCB,
+    100: #00ffcb,
     200: #9fa8da,
     300: #7986cb,
     400: #5c6bc0,
@@ -35,38 +35,37 @@ $apprendo-pallette: (
 
 // custom background and foreground palettes
 $my-theme-background: (
-    status-bar: white,
-    app-bar: white,
-    background: white,
-    hover: rgba(black, 0.04),
-    card: white,
-    dialog: white,
-    disabled-button: rgba(black, 0.12),
-    raised-button: #F8F8F9,
-    focused-button: $dark-focused,
-    selected-button: map_get($mat-grey, 300),
-    selected-disabled-button: map_get($mat-grey, 400),
-    disabled-button-toggle: map_get($mat-grey, 200),
-    unselected-chip: map_get($mat-grey, 300),
-    disabled-list-option: map_get($mat-grey, 200)
+    status-bar: black,
+    app-bar: map_get($mat-grey, 900),
+    background: #303030,
+    hover: rgba(white, 0.04),
+    dialog: map_get($mat-grey, 800),
+    disabled-button: rgba(white, 0.12),
+    raised-button: map-get($mat-grey, 800),
+    focused-button: $light-focused,
+    selected-button: map_get($mat-grey, 900),
+    selected-disabled-button: map_get($mat-grey, 800),
+    disabled-button-toggle: black,
+    unselected-chip: map_get($mat-grey, 700),
+    disabled-list-option: black
 );
 
 $my-theme-foreground: (
-    base: black,
-    divider: $dark-dividers,
-    dividers: $dark-dividers,
-    disabled: $dark-disabled-text,
-    disabled-button: rgba(black, 0.26),
-    disabled-text: $dark-disabled-text,
+    base: white,
+    divider: $light-dividers,
+    dividers: $light-dividers,
+    disabled: $light-disabled-text,
+    disabled-button: rgba(white, 0.3),
+    disabled-text: $light-disabled-text,
     elevation: black,
-    hint-text: $dark-disabled-text,
-    secondary-text: $dark-secondary-text,
-    icon: rgba(black, 0.54),
-    icons: rgba(black, 0.54),
-    text: rgba(black, 0.87),
-    slider-min: rgba(black, 0.87),
-    slider-off: rgba(black, 0.26),
-    slider-off-active: rgba(black, 0.38)
+    hint-text: $light-disabled-text,
+    secondary-text: $light-secondary-text,
+    icon: white,
+    icons: white,
+    text: black,
+    slider-min: white,
+    slider-off: rgba(white, 0.3),
+    slider-off-active: rgba(white, 0.3)
 );
 
 // instead of creating a theme with mat-light-theme like a sane person, we will create our own theme-creating function that lets us apply our own foreground and background palettes.
@@ -241,8 +240,8 @@ $my-theme-warning: mat-palette($mat-orange);
 $my-theme-error: mat-palette($mat-red);
 
 // The rest of this is like a normal theme.scss file. The only difference being that we use create-my-theme instead of mat-light-theme
-$my-theme-primary: mat-palette($apprendo-pallette, 50);
-$my-theme-accent: mat-palette($apprendo-pallette, 100);
+$my-theme-primary: mat-palette($app-pallette, 50);
+$my-theme-accent: mat-palette($app-pallette, 100);
 $my-theme-warn: mat-palette($mat-red);
 
 $my-theme: create-my-theme($my-theme-primary, $my-theme-accent, $my-theme-warn);
@@ -253,7 +252,6 @@ $my-theme: create-my-theme($my-theme-primary, $my-theme-accent, $my-theme-warn);
     @include dialog-component-theme($theme);
     @include notification-theme($theme-info, $theme-success, $theme-warnig, $theme-error);
 }
-
 
 // specify theme class eg: <body class="my-theme"> ... </body>
 .my-light-theme {
@@ -266,6 +264,23 @@ $my-theme: create-my-theme($my-theme-primary, $my-theme-accent, $my-theme-warn);
     }
 
     .mat-progress-bar.mat-accent .mat-progress-bar-buffer {
-        background-color: #13101A !important;
+        background-color: #13101a !important;
+    }
+
+    .mat-form-field {
+        .mat-select-value-text {
+            color: white !important;
+        }
+
+        &.mat-focused {
+            .mat-form-field-label {
+                color: map-get($app-pallette, 100) !important;
+            }
+    
+            .mat-form-field-underline,
+            .mat-form-field-ripple  {
+                background-color: map-get($app-pallette, 100) !important;
+            }
+        }
     }
 }
