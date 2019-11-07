@@ -5,10 +5,8 @@ export interface Computer {
     model: string;
     releaseDate: Date;
     computerType: string;
-    prices: {
-        price: number;
-        availableAt: string;
-    }[];
+    price: number;
+    availableAt: string[];
     specifications: {
         processor: Processor;
         memory: Memory;

@@ -1,5 +1,5 @@
 <div class="main-bg w-100" [ngClass]="{'h-100': router.url === '/' || router.url.indexOf('computer') !== -1}">
-    <nav class="navbar navbar-expand-lg navbar-light container justify-content-between" [ngClass]="{'p-0': router.url === '/'}">
+    <nav class="navbar navbar-expand-lg navbar-light container" [ngClass]="{'justify-content-end': router.url === '/', 'justify-content-between': router.url !== '/'}">
         <a class="navbar-brand mx-0 my-1 p-0" href="/" *ngIf="router.url !== '/'">
             <img src="../assets/logo.png" width="65" alt="">
         </a>
@@ -20,11 +20,11 @@
         </div>
     </nav>
 
-    <div class="main-container position-relative" [ngClass]="{'h-100': router.url === '/'}">
+    <div class="main-container position-relative">
         <router-outlet></router-outlet>
         <footer class="d-flex justify-content-center align-items-center p-2" *ngIf="router.url !== '/' && router.url !== '/wizard'" >
             <a class="navbar-brand p-0 m-0" href="/">
-                <img src="../assets/logo.png" width="50" alt="">
+                <img src="../assets/logo.png" width="45" alt="">
             </a>
         </footer>
     </div>

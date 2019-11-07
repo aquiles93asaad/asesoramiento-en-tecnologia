@@ -1,8 +1,9 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxGalleryModule } from 'ngx-gallery';
 
 import {
     MatButtonModule,
@@ -29,6 +30,13 @@ import { AuthHeaderInterceptor } from './services/header.interceptor';
 import { DragAndDropComponent } from './drag-and-drop/drag-and-drop.component';
 import { ProfileModalComponent } from './profile-modal/profile-modal.component';
 import { ComputerDetailComponent } from './computer-detail/computer-detail.component';
+
+export class CustomHammerConfig extends HammerGestureConfig  {
+    overrides = {
+        pinch: { enable: false },
+        rotate: { enable: false }
+    };
+ }
 
 @NgModule({
     declarations: [
@@ -58,14 +66,16 @@ import { ComputerDetailComponent } from './computer-detail/computer-detail.compo
         MatInputModule,
         MatMenuModule,
         ImageCropperModule,
-        NgxFileDropModule
+        NgxFileDropModule,
+        NgxGalleryModule
     ],
     providers: [
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthHeaderInterceptor,
             multi: true,
-        }
+        },
+        { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }
     ],
     bootstrap: [AppComponent],
     entryComponents: [

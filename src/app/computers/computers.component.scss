@@ -1,5 +1,5 @@
 .results-container {
-    height: calc(100% - 45px);
+    height: calc(100% - 46px);
     background: #241D31 0% 0% no-repeat padding-box;
     box-shadow: 0px 0px 10px #000000A6;
 }
@@ -34,6 +34,38 @@
     
     .available-label {
         font-size: 14px;
+    }
+
+    &.in-detail {
+        .other-options-container {
+            .brand-name {
+                font-size: 24px;
+            }
+
+            .other-option {
+                .brand-name {
+                    font-size: 18px;
+                }
+    
+                .computer-name {
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+
+    .specs-container {
+        .spec-segment {
+            border-bottom: 1px solid #C8C1C1;
+
+            .spec-segment-title {
+                font-size: 22px;
+            }
+
+            .spec-segment-line {
+                font-size: 20px;
+            }
+        }
     }
 }
 

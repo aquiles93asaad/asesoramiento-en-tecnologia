@@ -5,7 +5,7 @@ import { ReplaySubject } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { environment } from './../../environments/environment.prod';
+import { environment } from './../../environments/environment';
 
 import { TokenStorage } from './token.storage';
 import { User } from '../models';

@@ -1,23 +1,109 @@
 <div class="d-flex w-100 results-container">
     <div class="col-12 col-md-5 p-3 d-flex flex-column images-container" *ngIf="computer">
-        <div class="d-flex flex-lg-grow-1 justify-content-end pr-lg-5 mr-lg-5">
-            <img src="../../assets/Lenovo.png" class="mr-lg-5" alt="" width="350" height="350">
-        </div>
+        <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
     </div>
-    <div class="col-12 col-md-7 p-0 overflow-auto scroll-parent computer-container" *ngIf="computer">
-        <div class="d-flex flex-column justify-content-center pl-lg-5">
-            <div class="op-font accent-text regular-font brand-name text-uppercase">{{computer.brand}}</div>
+    <div class="col-12 col-md-7 p-3 p-mg-4 p-lg-5 h-100 overflow-auto scroll-parent computer-container in-detail" *ngIf="computer">
+        <div class="d-flex flex-column justify-content-center">
+            <div class="d-flex mb-3">
+                <mat-progress-bar class="mr-3" color="accent" mode="determinate" value="100"></mat-progress-bar>
+                <span class="op-font accent-text" style="line-height: 10px;">5/5</span>
+            </div>
+            <div class="op-font accent-text bold-font brand-name text-uppercase">{{computer.brand}}</div>
             <div class="op-font text-light regular-font computer-name">{{computer.name}} {{computer.model}}</div>
-            <div class="op-font text-light bold-font price-tag mb-3">$100.400-$130.000</div>
+            <div class="op-font text-light bold-font price-tag mb-3">{{computer.price}}</div>
             <div class="op-font text-light ight-font available-label">Disponible en:</div>
-            <div class="available-at">
+            <div class="available-at mb-5">
                 <span class="op-font text-light">lenovo</span>
                 <span class="op-font text-light">garbarino</span>
                 <span class="op-font text-light">fravega</span>
             </div>
-            <div class="d-flex mb-3">
-                <mat-progress-bar class="mr-3" color="accent" mode="determinate" value="100"></mat-progress-bar>
-                <span class="op-font accent-text" style="line-height: 10px;">5/5</span>
+            <div class="d-flex flex-column specs-container my-3 h-100">
+                <div class="op-font accent-text regular-font brand-name">Características</div>
+                <div class="spec-segment py-4" *ngIf="processor">
+                    <div class="spec-segment-title op-font text-light regular-font">Procesador</div>
+                    <div class="spec-segment-line op-font text-light light-font">
+                        {{processor.brand | uppercase}} {{processor.version}}-{{processor.model}} ({{processor.cores}} cores, {{processor.rate}} GHz)
+                    </div>
+                </div>
+                <div class="spec-segment py-4" *ngIf="memory">
+                    <div class="spec-segment-title op-font text-light regular-font">Memoria</div>
+                    <div class="spec-segment-line op-font text-light light-font">
+                        {{memory.ram}} GB {{memory.ramType}} ({{memory.speed}} MHz, con {{memory.expandableRam}} GB Aplicable)
+                    </div>
+                </div>
+                <div class="spec-segment py-4" *ngIf="storage">
+                    <div class="spec-segment-title op-font text-light regular-font">Almacenamiento</div>
+                    <div class="spec-segment-line op-font text-light light-font">
+                        <span *ngIf="storage.space%1000 === 0">{{storage.space/1000}} TB </span>
+                        <span *ngIf="storage.space%1000 !== 0">{{storage.space}} GB </span>
+                        <span>{{storage.storageType}} </span>
+                        <span *ngIf="storage.storageType === 'HDD'">{{storage.speed}} rpm</span>
+                        <span *ngIf="storage.storageType === 'SSD'">{{storage.speed}} MB/s</span>
+                    </div>
+                </div>
+                <div class="spec-segment py-4" *ngIf="graphics">
+                    <div class="spec-segment-title op-font text-light regular-font">Tarjeta Gráfica</div>
+                    <div class="spec-segment-line op-font text-light light-font">
+                        <span>{{graphics.brand | uppercase}} </span>
+                        <span>{{graphics.graphicCardType}} </span>
+                        <span>{{graphics.processorRate}} </span>
+                        <span>{{graphics.ram}} GB </span>
+                        <span>{{graphics.ramType}}</span>
+                    </div>
+                </div>
+                <div class="spec-segment py-4" *ngIf="dimensions">
+                    <div class="spec-segment-title op-font text-light regular-font">Pantalla</div>
+                    <div class="spec-segment-line op-font text-light light-font">
+                        <span>Ancho: {{dimensions.weight}} </span>
+                        <span>Altura: {{dimensions.height}} </span>
+                        <span>Profundidad: {{dimensions.depth}} </span>
+                        <span>Peso: {{dimensions.weight}} </span>
+                    </div>
+                </div>
+                <div class="spec-segment py-4" *ngIf="computer.specifications.operatingSystem">
+                    <div class="spec-segment-title op-font text-light regular-font">Sistema Operativo</div>
+                    <div class="spec-segment-line op-font text-light light-font">{{computer.specifications.operatingSystem}}</div>
+                </div>
+                <div class="spec-segment py-4" *ngIf="battery">
+                    <div class="spec-segment-title op-font text-light regular-font">Batería</div>
+                    <div class="spec-segment-line op-font text-light light-font">
+                        <span>Duración: {{battery.duration}} hs </span>
+                        <span>Sin conexión: {{battery.restDuration}} hs</span>
+                    </div>
+                </div>
+                <div class="spec-segment py-4" *ngIf="computer.specifications.connectivity">
+                    <div class="spec-segment-title op-font text-light regular-font">Conectividad</div>
+                    <div class="spec-segment-line op-font text-light light-font">
+                        <span *ngIf="computer.specifications.connectivity.bluetooth">Bluetooth, </span>
+                        <span *ngIf="computer.specifications.connectivity.wifi">WiFi, </span>
+                        <span *ngIf="computer.specifications.connectivity.hdmiPort">HDMI, </span>
+                        <span *ngIf="computer.specifications.connectivity.hdmiMiniPort">HDMI mini, </span>
+                        <span *ngIf="computer.specifications.connectivity.usb2Ports">{{computer.specifications.connectivity.usb2Ports}} puertos usb 2, </span>
+                        <span *ngIf="computer.specifications.connectivity.usb3Ports">{{computer.specifications.connectivity.usb3Ports}} puertos usb 3, </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="other-options-container d-flex flex-column align-items-center justify-content-center">
+                <div class="op-font accent-text regular-font brand-name my-4">Si no te convenció, tenemos otras opciones para vos</div>
+                <div class="other-options d-flex align-items-center justify-content-around">
+                    <div class="other-option d-flex flex-column justify-content-center align-items-center">
+                        <div>
+                            <img src="../../assets/Lenovo.png" class="mr-lg-5" alt="" width="150" height="150">
+                        </div>
+                        <div class="op-font accent-text regular-font brand-name">HP</div>
+                        <div class="op-font text-light regular-font computer-name">Envy 13</div>
+                        <a color="accent" class="op-font light-font accent-link" *ngIf="!first" [routerLink]="['/computer', computer._id]">ver más</a>
+                    </div>
+                    <div class="other-option d-flex flex-column justify-content-center align-items-center">
+                        <div>
+                            <img src="../../assets/Lenovo.png" class="mr-lg-5" alt="" width="150" height="150">
+                        </div>
+                        <div class="op-font accent-text regular-font brand-name">MacBook pro</div>
+                        <div class="op-font text-light regular-font computer-name">Air 13</div>
+                        <a color="accent" class="op-font light-font accent-link" *ngIf="!first" [routerLink]="['/computer', computer._id]">ver más</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
