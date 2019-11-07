@@ -1,4 +1,4 @@
-<div class="d-flex w-100 h-100 pt-4 results-container">
+<div class="d-flex w-100 results-container">
     <div class="col-2 p-3 d-flex flex-column filters-container">
         <div class="mb-3">
             <span *ngFor="let profile of profiles; let last = last;" class="op-font accent-text regular-font">{{profile}} <span
@@ -10,8 +10,8 @@
     </div>
     <div class="col-10 p-0 overflow-auto scroll-parent">
         <div *ngFor="let computer of computers; let first = first"
-            class="computer-container d-flex justify-content-start w-100 p-5">
-            <div class="d-flex flex-column justify-content-start pl-lg-5">
+            class="computer-container d-flex justify-content-start w-100 px-5 py-4">
+            <div class="d-flex flex-column justify-content-center pl-lg-5">
                 <div class="op-font text-light regular-font best-option mb-2" *ngIf="first">Esta opción es la mejor para
                     vos!</div>
                 <div class="d-flex mb-3">
@@ -27,9 +27,9 @@
                     <span class="op-font text-light">garbarino</span>
                     <span class="op-font text-light">fravega</span>
                 </div>
-                <button mat-raised-button color="accent" class="op-font bold-font text-uppercase mt-5" *ngIf="first">Ver
+                <button mat-raised-button color="accent" class="op-font bold-font text-uppercase mt-5" *ngIf="first" [routerLink]="['/computer', computer._id]">Ver
                     más</button>
-                <a color="accent" class="op-font light-font accent-link" *ngIf="!first">ver más</a>
+                <a color="accent" class="op-font light-font accent-link" *ngIf="!first" [routerLink]="['/computer', computer._id]">ver más</a>
             </div>
             <div class="d-flex flex-lg-grow-1 justify-content-end pr-lg-5 mr-lg-5">
                 <img src="../../assets/Lenovo.png" class="mr-lg-5" alt="" width="350" height="350">

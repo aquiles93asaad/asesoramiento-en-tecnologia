@@ -1,7 +1,7 @@
 .main-bg {
     background-image: linear-gradient(to right bottom, #201830, #1f172f, #1e162d, #1d162c, #1c152b, #1b1429, #1a1427, #191325, #171222, #161220, #15111d, #13101a);
     min-height: 100%;
-    // @media screen and (min-width: 922px) {
+    // @media screen and (min-width: 992px) {
     //     background: url('../assets/bg.png');
     //     background-repeat: no-repeat;
     //     background-position-x: unset;
@@ -12,13 +12,44 @@
 
     nav {
         background-color: transparent;
+        .accent-link,
+        .login-btn {
+            font-size: 12px;
+        }
+
+        .login-btn {
+            height: 25px;
+            line-height: 25px;
+            width: 100px;
+        }
+
+        .links {
+            font-size: 15px;
+            letter-spacing: -1px;
+            line-height: 1;
+            text-align: center;
+            padding: 15px;
+
+            &.side {
+                padding: 0 14px;
+            }
+        }
+
+        .right-logo {
+            max-width: 25px;
+
+            &.has-image {
+                max-width: 30px;
+                vertical-align: bottom;
+            }
+        }
     }
 
     .main-container {
         height: calc(100% - 40px);
 
-        @media screen and (min-width: 922px) {
-            height: calc(100% - 86px);
+        @media screen and (min-width: 992px) {
+            height: calc(100% - 60px);
         }
     }
 }

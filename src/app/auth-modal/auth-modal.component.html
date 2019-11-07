@@ -1,0 +1,82 @@
+<h1 mat-dialog-title color="primary" class="text-center my-3">{{header}}</h1>
+<div mat-dialog-content class="m-0 d-flex">
+    <form [formGroup]="authForm" class="d-flex flex-column mx-auto flex-grow-1 mb-4">
+        <div class="controls-container auth mx-auto">
+            <div class="row mb-3">
+                <mat-form-field class="col-12">
+                    <input matInput placeholder="Email" type="email" name="email" formControlName="email"
+                        [required]="true">
+                    <mat-error *ngIf="!!f.email.errors">
+                        <span *ngIf="!!f.email.errors.required">Este campo es obligatorio</span>
+                        <span *ngIf="!!f.email.errors.email">Debe ingresar un email válido</span>
+                        <span *ngIf="!!f.email.errors.userExists">Un usuario con este email ya existe</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="row mb-3" *ngIf="authType === 'register'">
+                <mat-form-field class="col-12">
+                    <input matInput placeholder="Nombre" type="text" name="name" formControlName="name"
+                        [required]="true">
+                    <mat-error *ngIf="!!f.name.errors">
+                        <span *ngIf="!!f.name.errors.required">Este campo es obligatorio</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="row mb-3" *ngIf="authType === 'register'">
+                <mat-form-field class="col-12">
+                    <input matInput placeholder="Apellido" type="text" name="lastName" formControlName="lastName"
+                        [required]="true">
+                    <mat-error *ngIf="!!f.lastName.errors">
+                        <span *ngIf="!!f.lastName.errors.required">Este campo es obligatorio</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="row mb-3" *ngIf="authType === 'login'">
+                <mat-form-field class="col-12">
+                    <input matInput placeholder="Contraseña" type="password" name="password" formControlName="password"
+                        [required]="true">
+                    <mat-error *ngIf="!!f.password.errors">
+                        <span *ngIf="!!f.password.errors.required">Este campo es obligatorio</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="mb-3" formGroupName="passwords" *ngIf="authType === 'register'">
+                <mat-form-field class="d-block">
+                    <input matInput type="password" placeholder="Contraseña" formControlName="password"
+                        [required]="true">
+                    <mat-error *ngIf="!!passwords.password.errors">
+                        <span *ngIf="!!passwords.password.errors.required">Campo obligatorio</span>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="d-block">
+                    <input matInput type="password" placeholder="Confirmar contraseña" formControlName="repeat"
+                        [required]="true">
+                    <mat-error *ngIf="!!passwords.repeat.errors">
+                        <span *ngIf="!!passwords.repeat.errors.required">Campo obligatorio</span>
+                        <span *ngIf="!passwords.repeat.errors.required && !!passwords.repeat.errors.MatchFields">Las
+                            contraseñas no coinciden</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row d-flex flex-column justify-content-center align-items-center flex-grow-1">
+            <button mat-raised-button color="accent" class="d-flex justify-content-center mb-2" (click)="submitForm()"
+                [disabled]="!authForm.valid && !isSubmitting">
+                <span *ngIf="!isSubmitting">{{submitBtnText}}</span>
+                <mat-progress-spinner class="py-2" color="accent" diameter="20" *ngIf="isSubmitting">
+                </mat-progress-spinner>
+            </button>
+            <div class="d-flex">
+                <span class="op-font text-light d-block mr-2">{{changeAuthLabel}}</span> <a color="accent"
+                    class="op-font bold-font accent-link" (click)="changeAuth()"
+                    style="text-decoration: none !important;">{{changeAuthBtnLabel}}</a>
+            </div>
+        </div>
+    </form>
+</div>

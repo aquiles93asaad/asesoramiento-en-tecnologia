@@ -1,0 +1,44 @@
+
+<ngx-file-drop *ngIf="!isUpload && availableExtensions.length == 0" class="uploadfilecontainer" dropZoneLabel="Drop files here"
+    (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+
+        <div class="d-flex flex-column justify-content-center align-items-center h-100 w-100" *ngIf="!isUpload">
+            <img src="../../../../assets/search-documents/upload.png" class="max-h">
+            <span class="font-size-18">Arrastrá o <a class="font-weight-bold color1 cursor-pointer"
+                    (click)="openFileSelector()"> Subí</a> tu documento</span>
+        </div>
+
+        <div class="d-flex flex-column justify-content-center align-items-center h-100 w-100" *ngIf="isUpload">
+            <img src="../../../../assets/cards/docs.png" class="max-h">
+            <tr *ngFor="let item of files; let i=index">
+                <td><strong>{{ item.relativePath }}</strong></td>
+            </tr>
+        </div>
+
+    </ng-template>
+</ngx-file-drop>
+<div *ngIf="availableExtensions.includes('jpeg') || availableExtensions.includes('png')" class="h-100 w-100 d-flex flex-column align-items-center">
+    <input type="file" (change)="fileChangeEvent($event)" style="color: white;"/>
+    <div class="col-12 row h-100">
+        <div class="col-9 h-100">
+            <image-cropper
+            class="h-calc-img w-100"
+            [imageChangedEvent]="imageChangedEvent"
+            [maintainAspectRatio]="true" [aspectRatio]="1/1"
+            [resizeToWidth]="200"
+            [resizeToHeight]="200"
+            format="png"
+            (imageCropped)="imageCropped($event)"
+            (imageLoaded)="imageLoaded()"
+            (cropperReady)="cropperReady()"
+            (loadImageFailed)="loadImageFailed()"
+            >
+            </image-cropper>
+        </div>
+        <div class="col-3 align-self-center">
+            <img *ngIf="availableExtensions.includes('jpeg') || availableExtensions.includes('png')" [src]="croppedImage" />
+        </div>
+    </div>
+</div>
+<iframe [hidden]="!isUpload" id="viewer" type="application/pdf" class="h-100 w-100" frameborder="0"></iframe>

@@ -1,0 +1,67 @@
+<h1 mat-dialog-title color="primary" class="text-center my-3">{{user.name | titlecase}} {{user.lastName | titlecase}}</h1>
+<div mat-dialog-content class="m-0 d-flex">
+    <form [formGroup]="profileForm" class="d-flex flex-column mx-auto flex-grow-1 mb-4">
+        <div class="controls-container row">
+            <div class="d-flex flex-column justify-content-center align-items-center col-12 col-md-4">
+                <div class="w-100 mb-3">
+                    <mat-form-field class="col-12">
+                        <input matInput placeholder="Email" type="email" name="email" formControlName="email">
+                    </mat-form-field>
+                </div>
+    
+                <div class="w-100 mb-3">
+                    <mat-form-field class="col-12">
+                        <input matInput placeholder="Nombre" type="text" name="name" formControlName="name">
+                    </mat-form-field>
+                </div>
+    
+                <div class="w-100 mb-3">
+                    <mat-form-field class="col-12">
+                        <input matInput placeholder="Apellido" type="text" name="lastName" formControlName="lastName">
+                    </mat-form-field>
+                </div>
+    
+                <!-- <div class="row mb-3">
+                    <mat-form-field class="col-12">
+                        <input matInput placeholder="Contraseña actual" type="password" name="oldPassword" formControlName="oldPassword"
+                        [required]="passwords.get('password').value">
+                        <mat-error *ngIf="!!f.oldPassword.errors">
+                            <span *ngIf="!!f.oldPassword.errors.required">Debe ingresar su contraseña actual para modificar la contraseña actual</span>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+    
+                <div class="mb-3" formGroupName="passwords">
+                    <mat-form-field class="d-block">
+                        <input matInput type="password" placeholder="Nueva contraseña" formControlName="password">
+                        <mat-error *ngIf="!!passwords.password.errors">
+                            <span *ngIf="!!passwords.password.errors.required">Campo obligatorio</span>
+                        </mat-error>
+                    </mat-form-field>
+    
+                    <mat-form-field class="d-block">
+                        <input matInput type="password" placeholder="Confirmar nueva contraseña" formControlName="repeat">
+                        <mat-error *ngIf="!!passwords.repeat.errors">
+                            <span *ngIf="!!passwords.repeat.errors.required">Campo obligatorio</span>
+                            <span *ngIf="!passwords.repeat.errors.required && !!passwords.repeat.errors.MatchFields">Las
+                                contraseñas no coinciden</span>
+                        </mat-error>
+                    </mat-form-field>
+                </div> -->
+            </div>
+
+            <div class="col-12 col-md-8">
+                <app-drag-and-drop [availableExtensions]="typeFiles" (outputDocumentFile)="getDocumentFile($event)"></app-drag-and-drop>
+            </div>
+        </div>
+
+        <div class="row d-flex flex-column justify-content-center align-items-center flex-grow-1">
+            <button mat-raised-button color="accent" class="d-flex justify-content-center mb-2" (click)="submitForm()"
+                [disabled]="!profileForm.valid && !isSubmitting">
+                <span *ngIf="!isSubmitting">Guardar</span>
+                <mat-progress-spinner class="py-2" color="accent" diameter="20" *ngIf="isSubmitting">
+                </mat-progress-spinner>
+            </button>
+        </div>
+    </form>
+</div>

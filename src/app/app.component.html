@@ -1,33 +1,31 @@
-<div class="main-bg w-100" [ngClass]="{'h-100': router.url === '/' || router.url === '/computers'}">
-    <nav class="navbar navbar-expand-lg navbar-light" [ngClass]="{'p-0': router.url === '/'}">
-        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse d-lg-none" id="navbarNav">
-            <a class="navbar-brand" href="#">Hidden brand</a>
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                </li>
-            </ul>
-        </div> -->
-        <div class="w-100 d-flex flex-column align-items-start mt-3" *ngIf="router.url !== '/'">
-            <div class="separator-line mb-2"></div>
-            <h4 class="op-font text-light regular-font title mb-3">Encontrá la computadora que buscás</h4>
-        </div>
-        <a class="navbar-brand" href="/" *ngIf="router.url !== '/'">
-            <img src="../assets/logo.png" width="100" alt="">
+<div class="main-bg w-100" [ngClass]="{'h-100': router.url === '/' || router.url.indexOf('computer') !== -1}">
+    <nav class="navbar navbar-expand-lg navbar-light container justify-content-between" [ngClass]="{'p-0': router.url === '/'}">
+        <a class="navbar-brand mx-0 my-1 p-0" href="/" *ngIf="router.url !== '/'">
+            <img src="../assets/logo.png" width="65" alt="">
         </a>
+        <div *ngIf="!user">
+            <a color="accent" class="op-font bold-font accent-link" (click)="openAuthModal('login')" style="text-decoration: none !important;">Login</a>
+            <button mat-raised-button color="accent" class="op-font bold-font login-btn ml-3" (click)="openAuthModal('register')">Registrarte</button>
+        </div>
+        <div *ngIf="user">
+            <a class="links side op-font regular-font text-white" [matMenuTriggerFor]="menu">
+                {{user.name | titlecase}} {{user.lastName | titlecase}}
+                <img class="right-logo ml-2" src="../assets/user-icon.png" *ngIf="!user.image">
+                <img class="right-logo has-image ml-2" src="{{user.image}}" *ngIf="user.image">
+            </a>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="profile()">Perfil</button>
+                <button mat-menu-item (click)="logout()">Salir</button>
+            </mat-menu>
+        </div>
     </nav>
 
-    <div class="main-container position-relative" [ngClass]="{'h-lg-100': router.url === '/'}">
+    <div class="main-container position-relative" [ngClass]="{'h-100': router.url === '/'}">
         <router-outlet></router-outlet>
+        <footer class="d-flex justify-content-center align-items-center p-2" *ngIf="router.url !== '/' && router.url !== '/wizard'" >
+            <a class="navbar-brand p-0 m-0" href="/">
+                <img src="../assets/logo.png" width="50" alt="">
+            </a>
+        </footer>
     </div>
 </div>

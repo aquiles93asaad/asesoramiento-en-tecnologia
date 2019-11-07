@@ -34,6 +34,18 @@ export class WizardComponent implements OnInit {
             // tslint:disable-next-line: prefer-for-of
             for (let i = 0; i < this.profiles.length; i++) {
                 this.profilesObject[this.profiles[i].name] = this.profiles[i];
+                // this.profilesObject[this.profiles[i].name].questionsAnswersObject = {};
+                // const questions = this.profiles[i].questions;
+                // for (let j = 0; j < questions.length; j++) {
+                //     this.profilesObject[this.profiles[i].name].questionsAnswersObject[this.profiles[i].name + '_question_' + j] = {};
+                //     const answers = questions[j].answers;
+                //     // tslint:disable-next-line: prefer-for-of
+                //     for (let k = 0; k < answers.length; k++) {
+                //         // tslint:disable-next-line: max-line-length
+                // tslint:disable-next-line: max-line-length
+                //         this.profilesObject[this.profiles[i].name].questionsAnswersObject[this.profiles[i].name + '_question_' + j][answers[k]._id] = answers[k];
+                //     }
+                // }
             }
         });
     }
@@ -66,6 +78,27 @@ export class WizardComponent implements OnInit {
 
     goForward() {
         if (this.step === this.allSteps) {
+            const answers = [];
+            const profiles = [];
+            for (const profile in this.questionsForm.value) {
+                if (this.questionsForm.value.hasOwnProperty(profile)) {
+                    const formGroup = this.questionsForm.value[profile];
+                    profiles.push(this.profilesObject[profile].label);
+                    for (const question in formGroup) {
+                        if (formGroup.hasOwnProperty(question)) {
+                            const questionSplit = question.split('_');
+                            answers.push(this.profilesObject[profile].questions[questionSplit[2]].answers[formGroup[question]]);
+                            // answers.push(this.profilesObject[profile].questionsAnswersObject[question][formGroup[question]]);
+                        }
+                    }
+                }
+            }
+            const completedWizard = {
+                computerType: this.computerType,
+                profiles,
+                answers
+            };
+            localStorage.setItem('wizard_answers', JSON.stringify(completedWizard));
             this.router.navigateByUrl('/computers');
         } else {
             this.step = this.step + 1;
@@ -101,17 +134,16 @@ export class WizardComponent implements OnInit {
         return form;
     }
 
-    getGroupControlsAsArray(control: AbstractControl): any[] {
-        console.log(control);
-        const form = control as FormGroup;
-        const controls = [];
-        for (const key in form.controls) {
-            if (form.controls.hasOwnProperty(key)) {
-                // tslint:disable-next-line: no-shadowed-variable
-                const control = { name: key, profileName: key.split('_')[0], control: form.controls[key] as FormControl};
-                controls.push(control);
-            }
-        }
-        return controls;
-    }
+    // getGroupControlsAsArray(control: AbstractControl): any[] {
+    //     const form = control as FormGroup;
+    //     const controls = [];
+    //     for (const key in form.controls) {
+    //         if (form.controls.hasOwnProperty(key)) {
+    //             // tslint:disable-next-line: no-shadowed-variable
+    //             const control = { name: key, profileName: key.split('_')[0], control: form.controls[key] as FormControl};
+    //             controls.push(control);
+    //         }
+    //     }
+    //     return controls;
+    // }
 }

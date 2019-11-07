@@ -148,14 +148,13 @@ $my-theme-foreground: (
         max-width: none !important;
         .mat-dialog-container {
             padding: 0;
+            background-color: map-get($app-pallette, 50);
+
             .mat-dialog-title {
-                padding: 24px 24px 24px 20px;
                 margin-bottom: 0;
-                margin-left: -24px;
-                margin-right: -24px;
                 // let's take mat-toolbar's default theme
                 background-color: mat-color($background, app-bar);
-                color: mat-color($foreground, text);
+                color: mat-color($foreground, base);
                 // now, mat-toolbar's colored themes
                 &[color="primary"] {
                     @include toolbar-color($primary);
@@ -270,6 +269,11 @@ $my-theme: create-my-theme($my-theme-primary, $my-theme-accent, $my-theme-warn);
     .mat-form-field {
         .mat-select-value-text {
             color: white !important;
+        }
+
+        input {
+            color: white;
+            caret-color: white;
         }
 
         &.mat-focused {

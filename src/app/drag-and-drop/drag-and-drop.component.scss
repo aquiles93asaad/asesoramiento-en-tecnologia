@@ -1,0 +1,48 @@
+.font-size-18 {
+  font-size: 18px;
+}
+
+.color1 {
+  color: #002e6d !important;  
+}
+.cursor-pointer{
+  cursor: pointer;
+}
+
+.color-container {
+  background-color: #f4f4f4;
+  opacity: 0.5;
+}
+
+:host ::ng-deep {
+  .ngx-file-drop__drop-zone {
+    height: 100% !important;
+    margin: 0px !important;
+    border: 2px dashed #1c8adb !important;
+    border-radius: 10px !important;
+    opacity: 0.5;    
+  }
+
+  .ngx-file-drop__content {
+      height: 100% !important;
+      width: 100% !important;    
+  }
+}
+
+.op-1 {
+  opacity: 1 !important;
+}
+
+// .img-upload {
+//   background-image: url("../../../../assets/search-documents/upload.png");
+//   background-repeat: no-repeat;
+//   background-position: center;
+// }
+
+.max-h{
+    max-height: 110px;
+}
+
+.h-calc-img{
+  height: calc(100% - 30px);
+}
