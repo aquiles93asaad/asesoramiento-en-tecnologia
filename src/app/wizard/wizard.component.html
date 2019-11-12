@@ -39,7 +39,12 @@
                         <div *ngFor="let question of profilesObject[profileForm].questions; let j = index" class="w-75 mx-auto mb-3">
                             <mat-form-field class="w-100">
                                 <mat-label>{{profilesObject[profileForm].questions[j].label}}</mat-label>
-                                <mat-select [formControlName]="[profileForm + '_question_' + j]">
+                                <mat-select [formControlName]="[profileForm + '_question_' + j]" *ngIf="profilesObject[profileForm].questions[j].questionType === 'simple'">
+                                    <mat-option *ngFor="let answer of profilesObject[profileForm].questions[j].answers; let k = index" [value]="k">
+                                        {{answer.label}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-select multiple [formControlName]="[profileForm + '_question_' + j]" *ngIf="profilesObject[profileForm].questions[j].questionType === 'multiple'">
                                     <mat-option *ngFor="let answer of profilesObject[profileForm].questions[j].answers; let k = index" [value]="k">
                                         {{answer.label}}
                                     </mat-option>

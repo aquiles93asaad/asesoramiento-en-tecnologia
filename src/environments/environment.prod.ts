@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: 'https://compu-help-api.herokuapp.com/api/'
+  baseUrl: 'http://localhost:3000/api/'
 };

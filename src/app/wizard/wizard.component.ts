@@ -85,9 +85,16 @@ export class WizardComponent implements OnInit {
                     const formGroup = this.questionsForm.value[profile];
                     profiles.push(this.profilesObject[profile].label);
                     for (const question in formGroup) {
-                        if (formGroup.hasOwnProperty(question)) {
+                        if (formGroup.hasOwnProperty(question) && question !== '') {
                             const questionSplit = question.split('_');
-                            answers.push(this.profilesObject[profile].questions[questionSplit[2]].answers[formGroup[question]]);
+                            if (formGroup[question].length  ) {
+                                // tslint:disable-next-line: prefer-for-of
+                                for (let i = 0; i < formGroup[question].length; i++) {
+                                    answers.push(this.profilesObject[profile].questions[questionSplit[2]].answers[formGroup[question][i]]);
+                                }
+                            } else {
+                                answers.push(this.profilesObject[profile].questions[questionSplit[2]].answers[formGroup[question]]);
+                            }
                             // answers.push(this.profilesObject[profile].questionsAnswersObject[question][formGroup[question]]);
                         }
                     }

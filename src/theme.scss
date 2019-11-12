@@ -266,6 +266,11 @@ $my-theme: create-my-theme($my-theme-primary, $my-theme-accent, $my-theme-warn);
         background-color: #13101a !important;
     }
 
+    .my-light-theme .mat-primary .mat-pseudo-checkbox-checked,
+    .my-light-theme .mat-primary .mat-pseudo-checkbox-indeterminate {
+        background-color: #00ffcb !important;
+    }
+
     .mat-form-field {
         .mat-select-value-text {
             color: white !important;

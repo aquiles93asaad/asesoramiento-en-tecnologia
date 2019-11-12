@@ -5,6 +5,7 @@ export interface User {
     email: string;
     esAdmin: boolean;
     image: string;
+    favouriteComputers: any[];
     createdBy: string;
     createdAt: Date;
     modifiedBy: string;

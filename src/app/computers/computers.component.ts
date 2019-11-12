@@ -14,7 +14,8 @@ export class ComputersComponent implements OnInit {
     private userSubscription: Subscription;
     user: User;
     computers: Computer[] = [];
-    profiles = ['Diseño', 'Ocio'];
+    profiles = [];
+    computerType = '';
 
     constructor(
         private router: Router,
@@ -29,6 +30,8 @@ export class ComputersComponent implements OnInit {
                     this.router.navigateByUrl('/wizard');
                     return;
                 } else {
+                    this.profiles = wizardResult.profiles;
+                    this.computerType = wizardResult.computerType;
                     this.getComputersByWizardAnswers(wizardResult.answers);
                 }
             }
@@ -48,5 +51,17 @@ export class ComputersComponent implements OnInit {
                 //localStorage.removeItem('wizard_answers');
                 this.computers = computers;
             });
+    }
+
+    addComputerToFavourite(computerId) {
+        if (this.user.favouriteComputers) {
+            if (this.user.favouriteComputers.includes(computerId)) {
+                if (this.user.favouriteComputers.indexOf(computerId) !== -1) {
+                    this.user.favouriteComputers.splice(this.user.favouriteComputers.indexOf(computerId), 1);
+                }
+            } else {
+                this.user.favouriteComputers.push(computerId);
+            }
+        }
     }
 }

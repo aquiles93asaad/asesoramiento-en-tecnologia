@@ -7,6 +7,7 @@ export interface Computer {
     computerType: string;
     price: number;
     availableAt: string[];
+    images: [];
     specifications: {
         processor: Processor;
         memory: Memory;
