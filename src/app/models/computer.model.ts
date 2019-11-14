@@ -6,7 +6,11 @@ export interface Computer {
     releaseDate: Date;
     computerType: string;
     price: number;
-    availableAt: string[];
+    availableAt: {
+        store: string,
+        url: string,
+        price: number
+    }[];
     images: [];
     specifications: {
         processor: Processor;

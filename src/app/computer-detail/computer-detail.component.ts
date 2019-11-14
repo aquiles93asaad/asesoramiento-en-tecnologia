@@ -1,3 +1,7 @@
+import { UserService } from './../services/user.service';
+import { AuthService } from './../services/auth.service';
+import { Subscription } from 'rxjs';
+import { User } from './../models/user.model';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Computer } from '../models';
@@ -11,7 +15,7 @@ import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation, NgxGalleryImag
 })
 export class ComputerDetailComponent implements OnInit {
     galleryOptions: NgxGalleryOptions[];
-    galleryImages: NgxGalleryImage[];
+    galleryImages: NgxGalleryImage[] = [];
 
     computer: Computer = null;
     processor: any;
@@ -22,10 +26,16 @@ export class ComputerDetailComponent implements OnInit {
     connectivity: any;
     dimensions: any;
 
+    user: User;
+
+    private userSubscription: Subscription;
+
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private computerService: ComputerService
+        private computerService: ComputerService,
+        private authService: AuthService,
+        private userService: UserService,
     ) {
         this.computerService.get(this.route.snapshot.params.id).subscribe(
             (computer: Computer) => {
@@ -37,6 +47,28 @@ export class ComputerDetailComponent implements OnInit {
                 this.storage = this.computer.specifications.storage;
                 this.connectivity = this.computer.specifications.connectivity;
                 this.dimensions = this.computer.specifications.dimensions;
+                // tslint:disable-next-line: prefer-for-of
+                for (let i = 0; i < this.computer.images.length; i++) {
+                    const galleryImage = {
+                        small: this.computer.images[i],
+                        medium: this.computer.images[i],
+                        big: this.computer.images[i]
+                    };
+                    this.galleryImages.push(galleryImage);
+                }
+                this.processComputerPrices();
+            }
+        );
+
+        if ((window as any).user) {
+            this.user = (window as any).user;
+        }
+
+        this.userSubscription = this.authService.userSource.subscribe(
+            (user) => {
+                this.user = user;
+                if (this.user) {
+                }
             }
         );
     }
@@ -67,29 +99,38 @@ export class ComputerDetailComponent implements OnInit {
                 preview: false
             }
         ];
- 
-        this.galleryImages = [
-            {
-                small: 'assets/Lenovo.png',
-                medium: 'assets/Lenovo.png',
-                big: 'assets/Lenovo.png'
-            },
-            {
-                small: 'assets/Lenovo.png',
-                medium: 'assets/Lenovo.png',
-                big: 'assets/Lenovo.png'
-            },
-            {
-                small: 'assets/Lenovo.png',
-                medium: 'assets/Lenovo.png',
-                big: 'assets/Lenovo.png'
-            },
-            {
-                small: 'assets/Lenovo.png',
-                medium: 'assets/Lenovo.png',
-                big: 'assets/Lenovo.png'
-            }
-        ];
     }
 
+    addComputerToFavourite(computerId) {
+        if (this.user.favouriteComputers && this.user.favouriteComputers.includes(computerId)) {
+            if (this.user.favouriteComputers.indexOf(computerId) !== -1) {
+                this.user.favouriteComputers.splice(this.user.favouriteComputers.indexOf(computerId), 1);
+            }
+        } else {
+            if (!this.user.favouriteComputers) {
+                this.user.favouriteComputers = [];
+            }
+            this.user.favouriteComputers.push(computerId);
+        }
+ 
+        this.userService.addComputerToFavourites(this.user.favouriteComputers).subscribe(
+            (user) => {
+                this.user = user;
+            });
+    }
+
+    private processComputerPrices() {
+        let bestPrice = 0;
+        // tslint:disable-next-line: prefer-for-of
+        for (let j = 0; j < this.computer.availableAt.length; j++) {
+            if (bestPrice === 0) {
+                bestPrice = this.computer.availableAt[j].price;
+            } else {
+                if (this.computer.availableAt[j].price !== 0 && this.computer.availableAt[j].price < bestPrice) {
+                    bestPrice = this.computer.availableAt[j].price;
+                }
+            }
+        }
+        this.computer.price = bestPrice;
+    }
 }

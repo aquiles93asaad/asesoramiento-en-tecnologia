@@ -1,6 +1,6 @@
 <div class="main-bg w-100 h-100">
     <nav class="navbar navbar-expand-lg navbar-light container justify-content-between" >
-        <a class="navbar-brand mx-0 my-1 p-0" href="/">
+        <a class="navbar-brand mx-0 my-1 p-0" [routerLink]="['/']">
             <img src="../assets/logo.png" width="65" alt="">
         </a>
         <div *ngIf="!user">
@@ -15,6 +15,7 @@
             </a>
             <mat-menu #menu="matMenu">
                 <button mat-menu-item (click)="profile()">Perfil</button>
+                <button mat-menu-item [routerLink]="['/favourites']">Favoritos</button>
                 <button mat-menu-item (click)="logout()">Salir</button>
             </mat-menu>
         </div>

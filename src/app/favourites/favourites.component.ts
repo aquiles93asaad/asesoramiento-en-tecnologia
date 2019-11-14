@@ -7,53 +7,36 @@ import { Subscription } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
 @Component({
-    selector: 'app-computers',
-    templateUrl: './computers.component.html',
-    styleUrls: ['./computers.component.scss']
+    selector: 'app-favourites',
+    templateUrl: './favourites.component.html',
+    styleUrls: ['../computers/computers.component.scss']
 })
-export class ComputersComponent implements OnInit {
+export class FavouritesComponent implements OnInit {
     private userSubscription: Subscription;
     user: User;
     computers: Computer[] = [];
-    profiles = [];
-    computerType = '';
 
     constructor(
         private router: Router,
         private computerService: ComputerService,
         private authService: AuthService,
         private userService: UserService
-    ) {
-        const wizardResult = JSON.parse(localStorage.getItem('wizard_answers'));
-        if (!wizardResult || !wizardResult.answers) {
-            this.router.navigateByUrl('/wizard');
-            return;
-        } else {
-            this.profiles = wizardResult.profiles;
-            this.computerType = wizardResult.computerType;
-            this.getComputersByWizardAnswers(wizardResult.answers);
-        }
-    }
+    ) { }
 
     ngOnInit() {
+        if ((window as any).user) {
+            this.user = (window as any).user;
+            this.getFavouritesComputers(this.user.favouriteComputers);
+        }
+
         this.userSubscription = this.authService.userSource.subscribe(
             (user) => {
                 this.user = user;
+                if (this.user) {
+                    this.getFavouritesComputers(this.user.favouriteComputers);
+                }
             }
         );
-    }
-
-    private getComputersByWizardAnswers(answers: any) {
-        this.computerService.searchBestComputersByFilters(answers).subscribe(
-            (computers) => {
-                if (this.user) {
-                    // TODO save serach history
-                }
-
-                //localStorage.removeItem('wizard_answers');
-                this.computers = computers;
-                this.processComputersPrices();
-            });
     }
 
     addComputerToFavourite(computerId) {
@@ -67,7 +50,7 @@ export class ComputersComponent implements OnInit {
             }
             this.user.favouriteComputers.push(computerId);
         }
-
+ 
         this.userService.addComputerToFavourites(this.user.favouriteComputers).subscribe(
             (user) => {
                 this.user = user;
@@ -91,5 +74,18 @@ export class ComputersComponent implements OnInit {
             }
             computer.price = bestPrice;
         }
+    }
+
+    private getFavouritesComputers(ids) {
+        const filters = {
+            _id : { $in: ids }
+        };
+
+        this.computerService.search(filters).subscribe(
+            (computers) => {
+                this.computers = computers;
+                this.processComputersPrices();
+            }
+        );
     }
 }

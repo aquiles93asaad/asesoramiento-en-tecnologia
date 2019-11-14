@@ -30,6 +30,7 @@ import { AuthHeaderInterceptor } from './services/header.interceptor';
 import { DragAndDropComponent } from './drag-and-drop/drag-and-drop.component';
 import { ProfileModalComponent } from './profile-modal/profile-modal.component';
 import { ComputerDetailComponent } from './computer-detail/computer-detail.component';
+import { FavouritesComponent } from './favourites/favourites.component';
 
 export class CustomHammerConfig extends HammerGestureConfig  {
     overrides = {
@@ -47,7 +48,8 @@ export class CustomHammerConfig extends HammerGestureConfig  {
         AuthModalComponent,
         DragAndDropComponent,
         ProfileModalComponent,
-        ComputerDetailComponent
+        ComputerDetailComponent,
+        FavouritesComponent
     ],
     imports: [
         BrowserModule,

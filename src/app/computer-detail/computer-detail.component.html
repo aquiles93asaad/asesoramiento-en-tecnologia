@@ -1,34 +1,47 @@
 <div class="d-flex w-100 results-container">
     <div class="col-12 col-md-5 p-3 d-flex flex-column images-container" *ngIf="computer">
+        <a color="accent" class="op-font light-font accent-link back-btn" [routerLink]="['/computers']">Volver</a>
         <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
     </div>
-    <div class="col-12 col-md-7 p-3 p-mg-4 p-lg-5 h-100 overflow-auto scroll-parent computer-container in-detail" *ngIf="computer">
+    <div class="col-12 col-md-7 p-3 p-mg-4 p-lg-5 h-100 overflow-auto scroll-parent computer-container in-detail"
+        *ngIf="computer">
         <div class="d-flex flex-column justify-content-center">
-            <div class="d-flex mb-3">
+            <!-- <div class="d-flex mb-3">
                 <mat-progress-bar class="mr-3" color="accent" mode="determinate" value="100"></mat-progress-bar>
                 <span class="op-font accent-text" style="line-height: 10px;">5/5</span>
-            </div>
+            </div> -->
+            <button mat-icon-button class="heart-btn" color="accent" aria-label="Example icon-button with a heart icon"
+                (click)="addComputerToFavourite(computer._id)" *ngIf="user" style="top: 3rem;">
+                <i *ngIf="!user.favouriteComputers || (user.favouriteComputers && !user.favouriteComputers.includes(computer._id))"
+                    class="far fa-heart"></i>
+                <i *ngIf="user.favouriteComputers && user.favouriteComputers.includes(computer._id)"
+                    class="fas fa-heart"></i>
+            </button>
             <div class="op-font accent-text bold-font brand-name text-uppercase">{{computer.brand}}</div>
             <div class="op-font text-light regular-font computer-name">{{computer.name}} {{computer.model}}</div>
-            <div class="op-font text-light bold-font price-tag mb-3">{{computer.price}}</div>
+            <div class="op-font text-light bold-font price-tag mb-3">${{computer.price}}</div>
             <div class="op-font text-light ight-font available-label">Disponible en:</div>
-            <div class="available-at mb-5">
-                <span class="op-font text-light">lenovo</span>
-                <span class="op-font text-light">garbarino</span>
-                <span class="op-font text-light">fravega</span>
+            <div class="d-flex available-at mb-5">
+                <div class="mr-3" *ngFor="let store of computer.availableAt">
+                    <a [href]="store.url" target="_blank">
+                        <img [src]="['../../assets/' + store.store + '.png']" alt="{{store.store}}" height="60">
+                    </a>
+                </div>
             </div>
             <div class="d-flex flex-column specs-container my-3 h-100">
                 <div class="op-font accent-text regular-font brand-name">Características</div>
                 <div class="spec-segment py-4" *ngIf="processor">
                     <div class="spec-segment-title op-font text-light regular-font">Procesador</div>
                     <div class="spec-segment-line op-font text-light light-font">
-                        {{processor.brand | uppercase}} {{processor.version}}-{{processor.model}} ({{processor.cores}} cores, {{processor.rate}} GHz)
+                        {{processor.brand | uppercase}} {{processor.version}}-{{processor.model}} ({{processor.cores}}
+                        cores, {{processor.rate}} GHz)
                     </div>
                 </div>
                 <div class="spec-segment py-4" *ngIf="memory">
                     <div class="spec-segment-title op-font text-light regular-font">Memoria</div>
                     <div class="spec-segment-line op-font text-light light-font">
-                        {{memory.ram}} GB {{memory.ramType}} ({{memory.speed}} MHz, con {{memory.expandableRam}} GB Aplicable)
+                        {{memory.ram}} GB {{memory.ramType}} ({{memory.speed}} MHz, con {{memory.expandableRam}} GB
+                        Aplicable)
                     </div>
                 </div>
                 <div class="spec-segment py-4" *ngIf="storage">
@@ -62,7 +75,8 @@
                 </div>
                 <div class="spec-segment py-4" *ngIf="computer.specifications.operatingSystem">
                     <div class="spec-segment-title op-font text-light regular-font">Sistema Operativo</div>
-                    <div class="spec-segment-line op-font text-light light-font">{{computer.specifications.operatingSystem}}</div>
+                    <div class="spec-segment-line op-font text-light light-font">
+                        {{computer.specifications.operatingSystem}}</div>
                 </div>
                 <div class="spec-segment py-4" *ngIf="battery">
                     <div class="spec-segment-title op-font text-light regular-font">Batería</div>
@@ -78,8 +92,12 @@
                         <span *ngIf="computer.specifications.connectivity.wifi">WiFi, </span>
                         <span *ngIf="computer.specifications.connectivity.hdmiPort">HDMI, </span>
                         <span *ngIf="computer.specifications.connectivity.hdmiMiniPort">HDMI mini, </span>
-                        <span *ngIf="computer.specifications.connectivity.usb2Ports">{{computer.specifications.connectivity.usb2Ports}} puertos usb 2, </span>
-                        <span *ngIf="computer.specifications.connectivity.usb3Ports">{{computer.specifications.connectivity.usb3Ports}} puertos usb 3, </span>
+                        <span
+                            *ngIf="computer.specifications.connectivity.usb2Ports">{{computer.specifications.connectivity.usb2Ports}}
+                            puertos usb 2, </span>
+                        <span
+                            *ngIf="computer.specifications.connectivity.usb3Ports">{{computer.specifications.connectivity.usb3Ports}}
+                            puertos usb 3, </span>
                     </div>
                 </div>
             </div>
@@ -89,7 +107,7 @@
                 <div class="other-options d-flex align-items-center justify-content-around">
                     <div class="other-option d-flex flex-column justify-content-center align-items-center">
                         <div>
-                            <img src="../../assets/Lenovo.png" class="mr-lg-5" alt="" width="150" height="150">
+                            <img src="../../assets/generic.png" class="mr-lg-5" alt="" width="150" height="150">
                         </div>
                         <div class="op-font accent-text regular-font brand-name">HP</div>
                         <div class="op-font text-light regular-font computer-name">Envy 13</div>
@@ -97,7 +115,7 @@
                     </div>
                     <div class="other-option d-flex flex-column justify-content-center align-items-center">
                         <div>
-                            <img src="../../assets/Lenovo.png" class="mr-lg-5" alt="" width="150" height="150">
+                            <img src="../../assets/generic.png" class="mr-lg-5" alt="" width="150" height="150">
                         </div>
                         <div class="op-font accent-text regular-font brand-name">MacBook pro</div>
                         <div class="op-font text-light regular-font computer-name">Air 13</div>

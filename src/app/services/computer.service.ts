@@ -28,9 +28,10 @@ export class ComputerService {
         );
     }
 
-    search(): Observable<any> {
-        const filters = {};
-        return this.http.post(this.computerUrl + 'search', filters).pipe(
+    search(filters: any): Observable<any> {
+        return this.http.post(this.computerUrl + 'search', {
+            filters
+        }).pipe(
             map(
                 (data: any) => {
                     if (data.computers) {

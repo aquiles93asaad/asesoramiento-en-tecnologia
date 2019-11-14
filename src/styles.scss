@@ -60,13 +60,9 @@ body {
     }
     
     .mat-raised-button,
-    .mat-stroked-button {
+    .mat-stroked-button,
+    .mat-icon-button {
         height: 40px;
-        
-        // .mat-ripple-element {
-        //     max-width: 100%;
-        //     max-height: 100%;
-        // }
 
         &:focus {
             outline: none;
@@ -132,5 +128,9 @@ body {
         .w-lg-50 {
             width: 50% !important;
         }
+    }
+
+    .cdk-overlay-container {
+        z-index: 3000;
     }
 }

@@ -47,4 +47,20 @@ export class UserService {
             )
         );
     }
+
+    addComputerToFavourites(computersIds: string[]): Observable<any> {
+        return this.http.post(this.userUrl + 'setFavourites', {
+            computersIds
+        }).pipe(
+            map(
+                (data: any) => {
+                    if (data.user) {
+                        return data.user;
+                    }
+
+                    throw new HttpErrorResponse({ status: 401, statusText: data.errorMessage, error: data.errorType });
+                }
+            )
+        );
+    }
 }

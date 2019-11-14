@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { WizardComponent } from './wizard/wizard.component';
 import { ComputersComponent } from './computers/computers.component';
 import { ComputerDetailComponent } from './computer-detail/computer-detail.component';
+import { FavouritesComponent } from './favourites/favourites.component';
 
 const routes: Routes = [
     {
@@ -22,6 +23,10 @@ const routes: Routes = [
         path: 'computer/:id',
         component: ComputerDetailComponent
     },
+    {
+        path: 'favourites',
+        component: FavouritesComponent
+    }
 ];
 
 @NgModule({
