@@ -1,7 +1,7 @@
-<div class="d-flex flex-column justify-content-start pb-4 mx-4 pt-2 h-100">
+<div class="container d-flex flex-column justify-content-start pb-4 pt-2 h-100">
     <!-- <div class="breadcrumbs accent-text mb-4">{{computerType}} <span *ngIf="step == 2">></span></div> -->
     <div class="card-container d-flex justify-content-center align-items-center flex-grow-1">
-        <div class="p-4 dark-card w-lg-75 w-md-100 d-flex flex-column align-items-center position-relative">
+        <div class="p-5 dark-card w-100 h-100 d-flex flex-column align-items-center position-relative">
             <mat-progress-bar class="w-50 d-flex position-absolute" color="accent" mode="determinate" [value]="progressValue()"
                 bufferValue="75">
             </mat-progress-bar>
@@ -10,7 +10,7 @@
                 <h4 class="op-font text-light regular-font my-4">Contanos, ¿qué uso le vas a dar?</h4>
                 <div class="d-flex justify-content-around flex-grow-1 row w-100 h-100 scroll-parent">
                     <div *ngFor="let profile of profiles" (click)="chooseProfile(profile.name)"
-                        class="d-flex flex-column align-items-center justify-content-center col-4 mb-3">
+                        class="d-flex flex-column align-items-center justify-content-center col-12 col-sm-6 col-lg-4 mb-3">
                         <div class="icon-container d-flex align-items-center justify-content-center"
                             [ngClass]="{'chosen': chosenProfiles.includes(profile.name)}">
                             <img [src]="'../../assets/' + profile.name + '.png' ">
@@ -23,7 +23,7 @@
                 <h4 class="op-font text-light regular-font my-4">Elegí la opción que más necesites</h4>
                 <div class="d-flex justify-content-around flex-grow-1 row w-100 h-100 scroll-parent">
                     <div *ngFor="let type of types" (click)="computerType = type.name"
-                        class="p-3 d-flex flex-column align-items-center justify-content-center col-6 col-md-4 col-lg-3">
+                        class="p-3 d-flex flex-column align-items-center justify-content-center col-12 col-sm-6 col-md-4 col-lg-3">
                         <div class="icon-container big d-flex align-items-center justify-content-center"
                             [ngClass]="{'chosen': computerType === type.name}">
                             <img [src]="'../../assets/' + type.image ">

@@ -22,23 +22,23 @@ export class ComputersComponent implements OnInit {
         private computerService: ComputerService,
         private authService: AuthService,
     ) {
-        this.userSubscription = this.authService.userSource.subscribe(
-            (user) => {
-                this.user = user;
-                const wizardResult = JSON.parse(localStorage.getItem('wizard_answers'));
-                if (!wizardResult || !wizardResult.answers) {
-                    this.router.navigateByUrl('/wizard');
-                    return;
-                } else {
-                    this.profiles = wizardResult.profiles;
-                    this.computerType = wizardResult.computerType;
-                    this.getComputersByWizardAnswers(wizardResult.answers);
-                }
-            }
-        );
+        const wizardResult = JSON.parse(localStorage.getItem('wizard_answers'));
+        if (!wizardResult || !wizardResult.answers) {
+            this.router.navigateByUrl('/wizard');
+            return;
+        } else {
+            this.profiles = wizardResult.profiles;
+            this.computerType = wizardResult.computerType;
+            this.getComputersByWizardAnswers(wizardResult.answers);
+        }
     }
 
     ngOnInit() {
+        this.userSubscription = this.authService.userSource.subscribe(
+            (user) => {
+                this.user = user;
+            }
+        );
     }
 
     private getComputersByWizardAnswers(answers: any) {

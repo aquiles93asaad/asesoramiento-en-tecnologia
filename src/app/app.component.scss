@@ -1,13 +1,11 @@
 .main-bg {
-    background-image: linear-gradient(to right bottom, #201830, #1f172f, #1e162d, #1d162c, #1c152b, #1b1429, #1a1427, #191325, #171222, #161220, #15111d, #13101a);
+    background-color: linear-gradient(to right bottom, #201830, #1f172f, #1e162d, #1d162c, #1c152b, #1b1429, #1a1427, #191325, #171222, #161220, #15111d, #13101a);
     min-height: 100%;
     // @media screen and (min-width: 992px) {
-    //     background: url('../assets/bg.png');
-    //     background-repeat: no-repeat;
-    //     background-position-x: unset;
-    //     background-position-y: center;
-    //     min-height: 100%;
-    //     background-size: 105%;
+        background-image: url('../assets/bg.png');
+        background-repeat: no-repeat;
+        // background-position-x: unset;
+        background-position: center;
     // }
 
     nav {
@@ -48,10 +46,6 @@
     }
 
     .main-container {
-        height: calc(100% - 40px);
-
-        @media screen and (min-width: 992px) {
-            height: calc(100% - 60px);
-        }
+        height: calc(100% - 60px);
     }
 }

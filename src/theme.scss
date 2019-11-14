@@ -38,11 +38,11 @@ $my-theme-background: (
     status-bar: black,
     app-bar: map_get($mat-grey, 900),
     background: #303030,
-    hover: rgba(white, 0.04),
+    hover: rgba(black, 0.04),
     dialog: map_get($mat-grey, 800),
     disabled-button: rgba(white, 0.12),
     raised-button: map-get($mat-grey, 800),
-    focused-button: $light-focused,
+    focused-button: $dark-focused,
     selected-button: map_get($mat-grey, 900),
     selected-disabled-button: map_get($mat-grey, 800),
     disabled-button-toggle: black,
@@ -266,9 +266,17 @@ $my-theme: create-my-theme($my-theme-primary, $my-theme-accent, $my-theme-warn);
         background-color: #13101a !important;
     }
 
-    .my-light-theme .mat-primary .mat-pseudo-checkbox-checked,
-    .my-light-theme .mat-primary .mat-pseudo-checkbox-indeterminate {
-        background-color: #00ffcb !important;
+    .mat-primary .mat-pseudo-checkbox-checked,
+    .mat-primary .mat-pseudo-checkbox-indeterminate {
+        background-color: map-get($app-pallette, 50) !important;
+    }
+    
+    .mat-pseudo-checkbox {
+        color: rgba(0, 0, 0, 0.54);
+
+        &::after {
+            color: white ;
+        }
     }
 
     .mat-form-field {
@@ -291,5 +299,12 @@ $my-theme: create-my-theme($my-theme-primary, $my-theme-accent, $my-theme-warn);
                 background-color: map-get($app-pallette, 100) !important;
             }
         }
+    }
+
+    .mat-flat-button.mat-accent .mat-ripple-element,
+    .mat-raised-button.mat-accent .mat-ripple-element,
+    .mat-fab.mat-accent .mat-ripple-element,
+    .mat-mini-fab.mat-accent .mat-ripple-element {
+        background-color: rgba(0, 0, 0, 0.1);
     }
 }
