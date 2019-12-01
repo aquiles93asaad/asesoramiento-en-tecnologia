@@ -16,7 +16,6 @@ import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation, NgxGalleryImag
 export class ComputerDetailComponent implements OnInit {
     galleryOptions: NgxGalleryOptions[];
     galleryImages: NgxGalleryImage[] = [];
-
     computer: Computer = null;
     processor: any;
     memory: any;
@@ -25,8 +24,22 @@ export class ComputerDetailComponent implements OnInit {
     storage: any;
     connectivity: any;
     dimensions: any;
-
     user: User;
+    math = Math;
+    stars = [1, 2, 3, 4, 5];
+    opinionStars = [
+        {index: 1, selected: false},
+        {index: 2, selected: false},
+        {index: 3, selected: false},
+        {index: 4, selected: false},
+        {index: 5, selected: false},
+    ];
+    opinion = {
+        rating: null,
+        comment: null,
+        date: null,
+        user: null,
+    };
 
     private userSubscription: Subscription;
 
@@ -101,6 +114,18 @@ export class ComputerDetailComponent implements OnInit {
         ];
     }
 
+    setOpinionStars(rating) {
+        this.opinion.rating = rating;
+        // tslint:disable-next-line: prefer-for-of
+        for (let i = 0; i < this.opinionStars.length; i++) {
+            this.opinionStars[i].selected = false;
+        }
+        // tslint:disable-next-line: prefer-for-of
+        for (let i = 0; i <= rating; i++) {
+            this.opinionStars[i].selected = true;
+        }
+    }
+
     addComputerToFavourite(computerId) {
         if (this.user.favouriteComputers && this.user.favouriteComputers.includes(computerId)) {
             if (this.user.favouriteComputers.indexOf(computerId) !== -1) {
@@ -112,11 +137,23 @@ export class ComputerDetailComponent implements OnInit {
             }
             this.user.favouriteComputers.push(computerId);
         }
- 
+
         this.userService.addComputerToFavourites(this.user.favouriteComputers).subscribe(
             (user) => {
                 this.user = user;
             });
+    }
+
+    sendComment() {
+        if (this.opinion.comment && this.opinion.rating) {
+            this.opinion.date = new Date();
+            this.opinion.user = this.user._id;
+            this.computerService.addComment(this.opinion, this.computer._id).subscribe(
+                (result) => {
+                    console.log(result);
+                }
+            )
+        }
     }
 
     private processComputerPrices() {

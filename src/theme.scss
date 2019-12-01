@@ -284,7 +284,7 @@ $my-theme: create-my-theme($my-theme-primary, $my-theme-accent, $my-theme-warn);
             color: white !important;
         }
 
-        input {
+        input, textarea {
             color: white;
             caret-color: white;
         }
