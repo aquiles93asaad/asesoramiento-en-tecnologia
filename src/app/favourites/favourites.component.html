@@ -19,7 +19,7 @@
                 <div class="op-font text-light regular-font computer-name">{{computer.name}} {{computer.model}}</div>
                 <div class="op-font text-light bold-font price-tag mb-3">${{computer.price}}</div>
                 <div class="op-font text-light ight-font available-label" >Disponible en:</div>
-                <div class="d-flex available-at mb-4">
+                <div class="d-flex available-at">
                     <div class="mr-3" *ngFor="let store of computer.availableAt">
                         <a [href]="store.url" target="_blank">
                             <img [src]="['../../assets/' + store.store + '.png']" alt="{{store.store}}" height="60">

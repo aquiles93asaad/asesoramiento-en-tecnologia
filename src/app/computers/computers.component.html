@@ -27,7 +27,7 @@
                 <div class="op-font text-light regular-font computer-name">{{computer.name}} {{computer.model}}</div>
                 <div class="op-font text-light bold-font price-tag mb-3">${{computer.price}}</div>
                 <div class="op-font text-light ight-font available-label" *ngIf="first">Disponible en:</div>
-                <div class="d-flex available-at mb-4" *ngIf="first">
+                <div class="d-flex available-at" *ngIf="first">
                     <div class="mr-3" *ngFor="let store of computer.availableAt">
                         <a [href]="store.url" target="_blank">
                             <img [src]="['../../assets/' + store.store + '.png']" alt="{{store.store}}" height="60">
@@ -40,7 +40,7 @@
                 <a color="accent" class="op-font light-font accent-link" *ngIf="!first"
                     [routerLink]="['/computer', computer._id]">ver más</a>
             </div>
-            <div class="d-flex flex-lg-grow-1 justify-content-end pr-lg-5 mr-lg-5">
+            <div class="d-flex flex-lg-grow-1 justify-content-end align-items-center pr-lg-5 mr-lg-5">
                 <img *ngIf="computer.images && computer.images[0]" src="{{computer.images[0]}}" class="computer-image mr-lg-5">
                 <img *ngIf="!computer.images" src="../../assets/no-computer.jpg" class="computer-image mr-lg-5">
             </div>
