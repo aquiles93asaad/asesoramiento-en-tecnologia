@@ -19,8 +19,13 @@
             </button>
             <div class="op-font accent-text bold-font brand-name text-uppercase">{{computer.brand}}</div>
             <div class="op-font text-light regular-font computer-name">{{computer.name}} {{computer.model}}</div>
+            <div class="my-2" *ngIf="computer.rating && computer.rating !== 0">
+                <i class="fa-star mr-2 accent-text" *ngFor="let star of stars; let i = index"
+                    [ngClass]="(math.floor(computer.rating) > i) ? 'fas' : 'far'"></i>
+                <span class="op-font text-light regular-font">{{ computer.comments.length }} opiniones</span>
+            </div>
             <div class="op-font text-light bold-font price-tag mb-3">${{computer.price}}</div>
-            <div class="op-font text-light ight-font available-label">Disponible en:</div>
+            <div class="op-font text-light ight-font available-label mb-2">Disponible en:</div>
             <div class="d-flex available-at mb-5">
                 <div class="mr-3" *ngFor="let store of computer.availableAt">
                     <a [href]="store.url" target="_blank">
@@ -28,7 +33,7 @@
                     </a>
                 </div>
             </div>
-            <div class="d-flex flex-column specs-container my-3 h-100">
+            <div class="d-flex flex-column my-3 h-100">
                 <div class="op-font accent-text regular-font brand-name">Características</div>
                 <div class="spec-segment py-4" *ngIf="processor">
                     <div class="spec-segment-title op-font text-light regular-font">Procesador</div>
@@ -100,10 +105,49 @@
                             puertos usb 3, </span>
                     </div>
                 </div>
+
+                <div class="op-font accent-text regular-font brand-name my-4">Opiniones sobre la computadora</div>
+                <!-- <div class="" *ngFor="let comment of computer.comments"> -->
+                <div class="d-flex comment-container" *ngFor="let comment of computer.comments">
+                    <div class="image-container">
+                        <img src="../../assets/user-icon.png" width="40">
+                    </div>
+                    <div class="d-flex flex-grow-1 flex-column">
+                        <div>Akhil Asaad</div>
+                        <div>
+                            <i class="fa-star" *ngFor="let star of stars; let i = index" class="mr-2"
+                                [ngClass]="(math.floor(comment.rating) > i) ? 'fas' : 'far'"></i>
+                        </div>
+                        <div>
+                            {{ comment.date | date: 'd - MMM - yyyy'}}
+                        </div>
+                        <p>{{ comment.comment }}</p>
+                    </div>
+                </div>
+                <div class="op-font text-light regular-font fs-20 my-4" *ngIf="computer.comments.length === 0">Todavía
+                    no hay opiniones sobre esta computadora</div>
+                <div class="my-3">
+                    <div class="op-font accent-text regular-font fs-24 mb-3">Contanos tu experiencia</div>
+                    <div class="mb-3">
+                        <i class="fa-star mr-2 accent-text" *ngFor="let star of opinionStars; let i = index"
+                            [ngClass]="(star.selected) ? 'fas' : 'far'" (click)="setOpinionStars(i)"
+                            style="cursor: pointer;"></i>
+                    </div>
+                    <mat-form-field class="d-block" appearance="fill">
+                        <mat-label>Tu opinion</mat-label>
+                        <textarea matInput [(ngModel)]="opinion.comment"></textarea>
+                    </mat-form-field>
+                    <button mat-raised-button color="accent" class="op-font bold-font text-uppercase mt-2"
+                        (click)="sendComment()" [disabled]="!opinion.comment || !opinion.rating">
+                        Enviar
+                        <i class="fas fa-paper-plane ml-2"></i>
+                    </button>
+                </div>
             </div>
 
             <div class="other-options-container d-flex flex-column align-items-center justify-content-center">
-                <div class="op-font accent-text regular-font brand-name my-4">Si no te convenció, tenemos otras opciones para vos</div>
+                <div class="op-font accent-text regular-font brand-name my-4">Si no te convenció, tenemos otras opciones
+                    para vos</div>
                 <div class="other-options d-flex align-items-center justify-content-around">
                     <div class="other-option d-flex flex-column justify-content-center align-items-center">
                         <div>
@@ -111,7 +155,8 @@
                         </div>
                         <div class="op-font accent-text regular-font brand-name">HP</div>
                         <div class="op-font text-light regular-font computer-name">Envy 13</div>
-                        <a color="accent" class="op-font light-font accent-link" [routerLink]="['/computer', computer._id]">ver más</a>
+                        <a color="accent" class="op-font light-font accent-link"
+                            [routerLink]="['/computer', computer._id]">ver más</a>
                     </div>
                     <div class="other-option d-flex flex-column justify-content-center align-items-center">
                         <div>
@@ -119,7 +164,8 @@
                         </div>
                         <div class="op-font accent-text regular-font brand-name">MacBook pro</div>
                         <div class="op-font text-light regular-font computer-name">Air 13</div>
-                        <a color="accent" class="op-font light-font accent-link" [routerLink]="['/computer', computer._id]">ver más</a>
+                        <a color="accent" class="op-font light-font accent-link"
+                            [routerLink]="['/computer', computer._id]">ver más</a>
                     </div>
                 </div>
             </div>

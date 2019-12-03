@@ -28,6 +28,21 @@ export class ComputerService {
         );
     }
 
+    addComment(comment, computerId): Observable<any> {
+        return this.http.post(this.computerUrl + 'addComment', {
+            comment,
+            computerId
+        }).pipe(
+            map(
+                (data: any) => {
+                    if (data.computer) {
+                        return data.computer;
+                    }
+                }
+            )
+        );
+    }
+
     search(filters: any): Observable<any> {
         return this.http.post(this.computerUrl + 'search', {
             filters
