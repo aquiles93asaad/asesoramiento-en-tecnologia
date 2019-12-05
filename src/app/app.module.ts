@@ -14,7 +14,9 @@ import {
     MatProgressSpinnerModule,
     MatSnackBarModule,
     MatInputModule,
-    MatMenuModule
+    MatMenuModule,
+    MatCheckboxModule,
+    MatIconModule
 } from '@angular/material';
 
 import { ImageCropperModule } from 'ngx-image-cropper';
@@ -69,7 +71,9 @@ export class CustomHammerConfig extends HammerGestureConfig  {
         MatMenuModule,
         ImageCropperModule,
         NgxFileDropModule,
-        NgxGalleryModule
+        NgxGalleryModule,
+        MatCheckboxModule,
+        MatIconModule
     ],
     providers: [
         {

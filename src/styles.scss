@@ -3,6 +3,7 @@
 $primary-color: #201830;
 $accent-color: #00FFCB;
 $grey-color: #707070;
+$danger: #DB554D;
 
 body {
     .op-font {
@@ -35,6 +36,10 @@ body {
 
     .fs-24 {
         font-size: 24px;
+    }
+
+    .fs-14 {
+        font-size: 14px;
     }
     
     .separator-line {
@@ -77,6 +82,34 @@ body {
         }
     }
 
+    .mat-form-field-appearance-outline {
+        .mat-form-field-wrapper {
+            padding-bottom: 16px;
+            height: 40px;
+        }
+
+        .mat-form-field-flex {
+            height: 40px;
+        }
+
+        .mat-form-field-infix {
+            border-top: 8px solid transparent;
+            padding: 0;
+        }
+
+        .mat-form-field-label-wrapper {
+            padding-top: 13px;
+        }
+
+        .mat-form-field-label {
+            font-size: 12px;
+        }
+        
+        input {
+            font-size: 12px;
+        }
+    }
+
     .accent-link {
         color: $accent-color !important;
         cursor: pointer;
@@ -108,6 +141,14 @@ body {
                 border-left: solid 0px transparent;
             }
         }
+    }
+
+    .accent-snackbar {
+        background: $accent-color !important;
+    }
+
+    .danger-snackbar {
+        background: $danger !important;
     }
 
     @media(min-width: 1024px) and (max-width: 1200px ) {

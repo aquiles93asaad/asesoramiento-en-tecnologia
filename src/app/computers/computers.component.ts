@@ -13,10 +13,17 @@ import { AuthService } from '../services/auth.service';
 })
 export class ComputersComponent implements OnInit {
     private userSubscription: Subscription;
+    private originalComputers: Computer[] = [];
     user: User;
     computers: Computer[] = [];
     profiles = [];
     computerType = '';
+    brands: string[] = [];
+    filters = {
+        profiles: [],
+        minPrice: null,
+        maxPrice: null
+    };
 
     constructor(
         private router: Router,
@@ -24,6 +31,15 @@ export class ComputersComponent implements OnInit {
         private authService: AuthService,
         private userService: UserService
     ) {
+    }
+
+    ngOnInit() {
+        this.userSubscription = this.authService.userSource.subscribe(
+            (user) => {
+                this.user = user;
+            }
+        );
+
         const wizardResult = JSON.parse(localStorage.getItem('wizard_answers'));
         if (!wizardResult || !wizardResult.answers) {
             this.router.navigateByUrl('/wizard');
@@ -33,27 +49,6 @@ export class ComputersComponent implements OnInit {
             this.computerType = wizardResult.computerType;
             this.getComputersByWizardAnswers(wizardResult.answers);
         }
-    }
-
-    ngOnInit() {
-        this.userSubscription = this.authService.userSource.subscribe(
-            (user) => {
-                this.user = user;
-            }
-        );
-    }
-
-    private getComputersByWizardAnswers(answers: any) {
-        this.computerService.searchBestComputersByFilters(answers).subscribe(
-            (computers) => {
-                if (this.user) {
-                    // TODO save serach history
-                }
-
-                //localStorage.removeItem('wizard_answers');
-                this.computers = computers;
-                this.processComputersPrices();
-            });
     }
 
     addComputerToFavourite(computerId) {
@@ -74,11 +69,82 @@ export class ComputersComponent implements OnInit {
             });
     }
 
-    private processComputersPrices() {
+    brandFilter(event) {
+        if (typeof event !== 'undefined' && event !== null) {
+            if (event.checked) {
+                this.filters.profiles.push(event.source.value);
+            } else {
+                this.filters.profiles.splice(this.filters.profiles.indexOf(event.source.value), 1);
+            }
+        }
+        this.filterComputers();
+    }
+
+    filterComputers() {
+        const result: Computer[] = [];
+        // tslint:disable-next-line: prefer-for-of
+        for (let i = 0; i < this.originalComputers.length; i++) {
+            let addComputer = true;
+            if (this.filters.profiles.length !== 0) {
+                if (!this.filters.profiles.includes(this.originalComputers[i].brand)) {
+                    addComputer = false;
+                }
+            }
+
+            if (this.filters.minPrice) {
+                if (this.filters.minPrice > this.originalComputers[i].price) {
+                    addComputer = false;
+                }
+            }
+
+            if (this.filters.maxPrice) {
+                if (this.filters.maxPrice < this.originalComputers[i].price) {
+                    addComputer = false;
+                }
+            }
+
+            if (addComputer) {
+                result.push(this.originalComputers[i]);
+            }
+        }
+        this.computers = result;
+    }
+
+    private getComputersByWizardAnswers(answers: any) {
+        const usageProfiles = [];
+        // tslint:disable-next-line: prefer-for-of
+        for (let i = 0; i < this.profiles.length; i++) {
+            usageProfiles.push(this.profiles[i]._id);
+        }
+
+        const params = {
+            answers,
+            usageProfiles,
+            type: this.computerType,
+            isNewSearch: false
+        };
+
+        if (this.user && JSON.parse(localStorage.getItem('new_wizard_search'))) {
+            params.isNewSearch = true;
+        }
+
+        this.computerService.searchBestComputersByFilters(params).subscribe(
+            (computers) => {
+                localStorage.setItem('new_wizard_search', JSON.stringify(false));
+                this.computers = computers;
+                this.originalComputers = computers;
+                this.processComputers();
+            });
+    }
+
+    private processComputers() {
         // tslint:disable-next-line: prefer-for-of
         for (let i = 0; i < this.computers.length; i++) {
             const computer = this.computers[i];
             let bestPrice = 0;
+            if (!this.brands.includes(this.computers[i].brand)) {
+                this.brands.push(this.computers[i].brand);
+            }
             // tslint:disable-next-line: prefer-for-of
             for (let j = 0; j < computer.availableAt.length; j++) {
                 if (bestPrice === 0) {

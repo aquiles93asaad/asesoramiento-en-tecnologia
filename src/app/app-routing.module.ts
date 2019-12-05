@@ -26,6 +26,10 @@ const routes: Routes = [
     {
         path: 'favourites',
         component: FavouritesComponent
+    },
+    {
+        path: 'search-history',
+        component: FavouritesComponent
     }
 ];
 

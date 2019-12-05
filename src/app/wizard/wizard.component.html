@@ -1,25 +1,26 @@
 <div class="container d-flex flex-column justify-content-start pb-4 pt-2 h-100">
     <!-- <div class="breadcrumbs accent-text mb-4">{{computerType}} <span *ngIf="step == 2">></span></div> -->
-    <div class="card-container d-flex justify-content-center align-items-center flex-grow-1">
+    <div class="card-container d-flex justify-content-center align-items-center h-100">
         <div class="p-5 dark-card w-100 h-100 d-flex flex-column align-items-center position-relative">
             <mat-progress-bar class="w-50 d-flex position-absolute" color="accent" mode="determinate" [value]="progressValue()"
                 bufferValue="75">
             </mat-progress-bar>
             <a color="accent" class="op-font light-font accent-link back-btn" (click)="goBack()">Volver</a>
-            <div *ngIf="step === 1" class="d-flex flex-column align-items-center w-100 h-100 flex-grow-1">
+            <div *ngIf="step === 1" class="d-flex flex-column align-items-center w-100 h-100">
                 <h4 class="op-font text-light regular-font my-4">Contanos, ¿qué uso le vas a dar?</h4>
                 <div class="d-flex justify-content-around flex-grow-1 row w-100 h-100 scroll-parent">
                     <div *ngFor="let profile of profiles" (click)="chooseProfile(profile.name)"
                         class="d-flex flex-column align-items-center justify-content-center col-12 col-sm-6 col-lg-4 mb-3">
                         <div class="icon-container d-flex align-items-center justify-content-center"
                             [ngClass]="{'chosen': chosenProfiles.includes(profile.name)}">
-                            <img [src]="'../../assets/' + profile.name + '.png' ">
+                            <!-- <img [src]="'../../assets/' + profile.name + '.png' "> -->
+                            <i [ngClass]="[profile.icon]"></i>
                         </div>
                         <div class="op-font text-light regular-font text-center mt-2">{{profile.label}}</div>
                     </div>
                 </div>
             </div>
-            <div *ngIf="step == 2" class="d-flex flex-column align-items-center w-100 h-100 flex-grow-1">
+            <div *ngIf="step == 2" class="d-flex flex-column align-items-center w-100 h-100">
                 <h4 class="op-font text-light regular-font my-4">Elegí la opción que más necesites</h4>
                 <div class="d-flex justify-content-around flex-grow-1 row w-100 h-100 scroll-parent">
                     <div *ngFor="let type of types" (click)="computerType = type.name"
@@ -32,9 +33,9 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="step >= 3" class="d-flex flex-column w-100 h-100 flex-grow-1">
-                <form [formGroup]="questionsForm">
-                    <form *ngFor="let profileForm of chosenProfiles; let i = index" [formGroup]="questionsForm.get(profileForm)" [hidden]="step !== (i + 3)" class="h-100 scroll-parent">
+            <div *ngIf="step >= 3" class="d-flex flex-column w-100 h-100">
+                <form [formGroup]="questionsForm" class="h-100">
+                    <form *ngFor="let profileForm of chosenProfiles; let i = index" [formGroup]="questionsForm.get(profileForm)" [hidden]="step !== (i + 3)" class="h-100 scroll-parent overflow-auto">
                         <h4 class="op-font text-light regular-font text-center my-4">{{profilesObject[profileForm].description}}</h4>
                         <div *ngFor="let question of profilesObject[profileForm].questions; let j = index" class="w-75 mx-auto mb-3">
                             <mat-form-field class="w-100">

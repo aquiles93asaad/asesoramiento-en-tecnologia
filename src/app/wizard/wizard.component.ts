@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UsageProfileService } from '../services/usage-profile.service';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, FormControl, AbstractControl, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, FormArray } from '@angular/forms';
+import { Helpers } from './../services/helpers.service';
 
 @Component({
     selector: 'app-wizard',
@@ -20,6 +21,15 @@ export class WizardComponent implements OnInit {
     profilesQuestions: FormArray;
     questionsForm: FormGroup;
 
+    private porfilesFontAwesomeIcons = {
+        design: 'fas fa-bezier-curve',
+        multimedia: 'fas fa-photo-video',
+        architecture: 'fas fa-drafting-compass',
+        administration: 'far fa-file-alt',
+        gamer: 'fas fa-gamepad',
+        ocio: 'fas fa-icons',
+    };
+
     types = [
         { image: 'notebook.png', name: 'Notebook' },
         { image: 'pc.png', name: 'PC' },
@@ -27,12 +37,14 @@ export class WizardComponent implements OnInit {
     constructor(
         private router: Router,
         private formBuilder: FormBuilder,
-        private usageProfileService: UsageProfileService
+        private usageProfileService: UsageProfileService,
+        private herlps: Helpers,
     ) {
         this.usageProfileService.search().subscribe((profiles) => {
             this.profiles = profiles;
             // tslint:disable-next-line: prefer-for-of
             for (let i = 0; i < this.profiles.length; i++) {
+                this.profiles[i].icon = this.porfilesFontAwesomeIcons[this.profiles[i].name];
                 this.profilesObject[this.profiles[i].name] = this.profiles[i];
                 // this.profilesObject[this.profiles[i].name].questionsAnswersObject = {};
                 // const questions = this.profiles[i].questions;
@@ -83,7 +95,7 @@ export class WizardComponent implements OnInit {
             for (const profile in this.questionsForm.value) {
                 if (this.questionsForm.value.hasOwnProperty(profile)) {
                     const formGroup = this.questionsForm.value[profile];
-                    profiles.push(this.profilesObject[profile].label);
+                    profiles.push(this.profilesObject[profile]);
                     for (const question in formGroup) {
                         if (formGroup.hasOwnProperty(question) && question !== '') {
                             const questionSplit = question.split('_');
@@ -103,11 +115,23 @@ export class WizardComponent implements OnInit {
             const completedWizard = {
                 computerType: this.computerType,
                 profiles,
-                answers
+                answers,
+                isNewSearch: true
             };
             localStorage.setItem('wizard_answers', JSON.stringify(completedWizard));
+            localStorage.setItem('new_wizard_search', JSON.stringify(true));
             this.router.navigateByUrl('/computers');
         } else {
+            if (this.step === 1 && this.chosenProfiles.length === 0) {
+                this.herlps.openErrorSnackBar('Por favor elija al menos un perfil para seguir', 3000);
+                return;
+            }
+
+            if (this.step === 2 && this.computerType === '') {
+                this.herlps.openErrorSnackBar('Por favor elija el tipo de computadora para seguir', 3000);
+                return;
+            }
+
             this.step = this.step + 1;
             if (this.step === 3) {
                 this.questionsForm = this.formBuilder.group({});

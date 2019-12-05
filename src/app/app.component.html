@@ -4,11 +4,11 @@
             <img src="../assets/logo.png" width="65" alt="">
         </a>
         <div *ngIf="!user">
-            <a color="accent" class="op-font bold-font accent-link" (click)="openAuthModal('login')" style="text-decoration: none !important;">Login</a>
-            <button mat-raised-button color="accent" class="op-font bold-font login-btn ml-3" (click)="openAuthModal('register')">Registrarte</button>
+            <a color="accent" class="op-font bold-font accent-link" (click)="openAuthModal('login')" style="text-decoration: none !important; ">Iniciar sesión</a>
+            <button mat-raised-button color="accent" class="op-font bold-font login-btn ml-3" (click)="openAuthModal('register')">Registrate</button>
         </div>
         <div *ngIf="user">
-            <a class="links side op-font regular-font text-white" [matMenuTriggerFor]="menu">
+            <a class="links side op-font regular-font text-white" [matMenuTriggerFor]="menu" style="cursor: pointer;">
                 {{user.name | titlecase}} {{user.lastName | titlecase}}
                 <img class="right-logo ml-2" src="../assets/user-icon.png" *ngIf="!user.image">
                 <img class="right-logo has-image ml-2" src="{{user.image}}" *ngIf="user.image">
@@ -16,6 +16,7 @@
             <mat-menu #menu="matMenu">
                 <button mat-menu-item (click)="profile()">Perfil</button>
                 <button mat-menu-item [routerLink]="['/favourites']">Favoritos</button>
+                <button mat-menu-item [routerLink]="['/search-history']">Historial</button>
                 <button mat-menu-item (click)="logout()">Salir</button>
             </mat-menu>
         </div>

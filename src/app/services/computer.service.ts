@@ -57,11 +57,12 @@ export class ComputerService {
         );
     }
 
-    searchBestComputersByFilters(answers: any, profiles?: any, filters?: any): Observable<any> {
+    searchBestComputersByFilters(params: any): Observable<any> {
         return this.http.post(this.computerUrl + 'search-by-score', {
-            answers,
-            profiles,
-            filters
+            answers: params.answers,
+            usageProfiles: params.usageProfiles,
+            type: params.type,
+            isNewSearch: params.isNewSearch
         }).pipe(
             map(
                 (data: any) => {

@@ -18,6 +18,11 @@
         max-height: 70%;
     }
 
+    i {
+        font-size: 40px;
+        color: $primary-color;
+    }
+
     &.big {
         height: 30vh;
         width: 30vh;
@@ -27,6 +32,10 @@
     &.chosen {
         cursor: pointer;
         background-color: $accent-color;
+
+        i {
+            color: white;
+        }
     }
 }
 
