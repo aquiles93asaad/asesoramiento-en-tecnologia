@@ -10,11 +10,38 @@
         </div>
         <div class="col-12 p-0 overflow-auto scroll-parent" *ngIf="searchHistory && searchHistory.length > 0">
             <div *ngFor="let search of searchHistory; let first = first"
-                class="computer-container d-flex justify-content-start w-100 px-5 py-4 position-relative">
+                class="computer-container d-flex justify-content-start w-75 mx-auto px-5 py-4 position-relative">
                 <button mat-icon-button class="trash-btn" color="accent" aria-label="Example icon-button"
                     (click)="removeSearch(search._id)">
                     <i class="far fa-trash-alt"></i>
                 </button>
+                <div class="d-flex flex-column">
+                    <div class="mb-3">
+                        <p class="op-font accent-text bold-font mt-0 mb-1 fs-14">Búsqueda del</p>
+                        <div class="op-font text-light regular-font pl-2">
+                            {{ search.createdAt | date: 'd - MMM - yyyy'}}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <p class="op-font accent-text bold-font mt-0 mb-1 fs-14">Perfiles elegidos</p>
+                        <div class="pl-2">
+                            <span *ngFor="let profile of search.usageProfiles; let last = last;"
+                                class="op-font text-light light-font fs-14">{{profile.label}} <span *ngIf="!last && profiles.length > 1">/
+                                </span></span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <p class="op-font accent-text bold-font mt-0 mb-1 fs-14">Tipo</p>
+                        <div class="pl-2">
+                            <span class="op-font text-light light-font fs-14">{{search.type}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center align-items-center flex-grow-1">
+                    <button mat-raised-button color="accent" class="d-flex justify-content-center mb-2 regular-font" (click)="repeatSearch(search)">
+                        Ver resultados
+                    </button>
+                </div>
             </div>
         </div>
     </div>

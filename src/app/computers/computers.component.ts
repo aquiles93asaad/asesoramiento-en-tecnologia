@@ -130,9 +130,9 @@ export class ComputersComponent implements OnInit {
             isNewSearch: false,
             userId: (this.user) ? this.user._id : null
         };
-
-        if (this.user && JSON.parse(localStorage.getItem('new_wizard_search'))) {
-            params.isNewSearch = true;
+        const newWizardSearch = JSON.parse(localStorage.getItem('new_wizard_search'));
+        if (this.user) {
+            params.isNewSearch = (newWizardSearch === 'true') ? true : false;
         }
 
         this.computerService.searchBestComputersByFilters(params).subscribe(
