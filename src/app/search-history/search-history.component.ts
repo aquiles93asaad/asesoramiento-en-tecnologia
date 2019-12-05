@@ -50,6 +50,10 @@ export class SearchHistoryComponent implements OnInit {
         this.router.navigateByUrl('/computers');
     }
 
+    removeSearch(searchId) {
+        console.log(searchId);
+    }
+
     private getUserSearchHistory() {
         this.userService.getUserSearchHistory().subscribe(
             (searchHistory) => {
