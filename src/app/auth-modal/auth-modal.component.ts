@@ -71,7 +71,7 @@ export class AuthModalComponent implements OnInit {
                     })
                 ).subscribe(
                     data => {
-                        this.showMessage('Bienvenido a Comput help.');
+                        this.showMessage('Bienvenido a CompuHelp.');
                         this.dialogRef.close();
                     },
                     error => {

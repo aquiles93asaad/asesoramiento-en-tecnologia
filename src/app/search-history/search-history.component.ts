@@ -7,7 +7,7 @@ import { UserService } from '../services/user.service';
 @Component({
     selector: 'app-search-history',
     templateUrl: './search-history.component.html',
-    styleUrls: ['./search-history.component.scss']
+    styleUrls: ['./search-history.component.scss', '../computers/computers.component.scss']
 })
 export class SearchHistoryComponent implements OnInit {
     private userSubscription: Subscription;

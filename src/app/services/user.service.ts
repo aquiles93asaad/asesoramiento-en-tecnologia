@@ -10,14 +10,14 @@ import { User } from '../models';
     providedIn: 'root'
 })
 export class UserService {
-    private userUrl = environment.baseUrl + 'user/';
+    private userUrl = environment.baseUrl + 'user';
 
     constructor(
         private http: HttpClient
     ) { }
 
     check(email: string): Observable<any> {
-        return this.http.post(this.userUrl + 'check', {
+        return this.http.post(this.userUrl + '/check', {
             email
         }).pipe(
             map(
@@ -33,7 +33,7 @@ export class UserService {
     }
 
     update(user: User): Observable<any> {
-        return this.http.put(this.userUrl + 'update', {
+        return this.http.put(this.userUrl, {
             user
         }).pipe(
             map(
@@ -49,7 +49,7 @@ export class UserService {
     }
 
     addComputerToFavourites(computersIds: string[]): Observable<any> {
-        return this.http.post(this.userUrl + 'setFavourites', {
+        return this.http.post(this.userUrl + '/setFavourites', {
             computersIds
         }).pipe(
             map(

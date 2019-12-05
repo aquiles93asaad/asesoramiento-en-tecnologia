@@ -43,6 +43,21 @@ export class ComputerService {
         );
     }
 
+    removeComment(commentId, computerId): Observable<any> {
+        return this.http.post(this.computerUrl + 'removeComment', {
+            commentId,
+            computerId
+        }).pipe(
+            map(
+                (data: any) => {
+                    if (data.computer) {
+                        return data.computer;
+                    }
+                }
+            )
+        );
+    }
+
     search(filters: any): Observable<any> {
         return this.http.post(this.computerUrl + 'search', {
             filters

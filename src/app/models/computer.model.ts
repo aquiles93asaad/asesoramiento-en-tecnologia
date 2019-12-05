@@ -1,3 +1,4 @@
+import { User } from './user.model';
 export interface Computer {
     _id?: string;
     name: string;
@@ -14,9 +15,10 @@ export interface Computer {
     images: string[];
     rating: number;
     comments: {
+        _id?: string;
         comment: string;
         rating: number;
-        user: string;
+        user: User;
         date: Date;
     }[];
     specifications: {

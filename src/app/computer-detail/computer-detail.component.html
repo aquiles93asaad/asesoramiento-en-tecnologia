@@ -1,4 +1,8 @@
 <div class="d-flex w-100 results-container">
+        <div class="w-100 h-100 d-flex justify-content-center align-items-center" *ngIf="!computer">
+            <mat-progress-spinner class="" color="accent" diameter="50" mode="indeterminate">
+            </mat-progress-spinner>
+        </div>
     <div class="col-12 col-md-5 p-3 d-flex flex-column images-container" *ngIf="computer">
         <a color="accent" class="op-font light-font accent-link back-btn" [routerLink]="['/computers']">Volver</a>
         <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
@@ -6,10 +10,6 @@
     <div class="col-12 col-md-7 p-3 p-mg-4 p-lg-5 h-100 overflow-auto scroll-parent computer-container in-detail"
         *ngIf="computer">
         <div class="d-flex flex-column justify-content-center">
-            <!-- <div class="d-flex mb-3">
-                <mat-progress-bar class="mr-3" color="accent" mode="determinate" value="100"></mat-progress-bar>
-                <span class="op-font accent-text" style="line-height: 10px;">5/5</span>
-            </div> -->
             <button mat-icon-button class="heart-btn" color="accent" aria-label="Example icon-button with a heart icon"
                 (click)="addComputerToFavourite(computer._id)" *ngIf="user" style="top: 3rem;">
                 <i *ngIf="!user.favouriteComputers || (user.favouriteComputers && !user.favouriteComputers.includes(computer._id))"
@@ -22,7 +22,9 @@
             <div class="my-2" *ngIf="computer.rating && computer.rating !== 0">
                 <i class="fa-star mr-2 accent-text" *ngFor="let star of stars; let i = index"
                     [ngClass]="(math.floor(computer.rating) > i) ? 'fas' : 'far'"></i>
-                <span class="op-font text-light regular-font">{{ computer.comments.length }} opiniones</span>
+                <div class="d-inline-block op-font text-light regular-font">{{ computer.comments.length }} <span
+                        *ngIf="computer.comments.length === 1"> opinión</span><span
+                        *ngIf="computer.comments.length > 1"> opiniones</span></div>
             </div>
             <div class="op-font text-light bold-font price-tag mb-3">${{computer.price}}</div>
             <div class="op-font text-light ight-font available-label mb-2">Disponible en:</div>
@@ -33,7 +35,7 @@
                     </a>
                 </div>
             </div>
-            <div class="d-flex flex-column my-3 h-100">
+            <div class="d-flex flex-column my-3 h-100 specs-container">
                 <div class="op-font accent-text regular-font brand-name">Características</div>
                 <div class="spec-segment py-4" *ngIf="processor">
                     <div class="spec-segment-title op-font text-light regular-font">Procesador</div>
@@ -108,25 +110,30 @@
 
                 <div class="op-font accent-text regular-font brand-name my-4">Opiniones sobre la computadora</div>
                 <!-- <div class="" *ngFor="let comment of computer.comments"> -->
-                <div class="d-flex comment-container" *ngFor="let comment of computer.comments">
-                    <div class="image-container">
-                        <img src="../../assets/user-icon.png" width="40">
+                <div class="d-flex comment-container p-4 mb-3 position-relative" *ngFor="let comment of computer.comments">
+                    <button mat-icon-button class="trash-btn" color="accent" aria-label="Example icon-button"
+                        (click)="removeComment(comment._id)" *ngIf="user._id === comment.user._id">
+                        <i class="far fa-trash-alt"></i>
+                    </button>
+                    <div class="image-container mr-2">
+                        <img src="{{comment.user.image}}" width="40" *ngIf="comment.user.image">
+                        <img src="../assets/user-icon.png" width="40" *ngIf="!comment.user.image">
                     </div>
                     <div class="d-flex flex-grow-1 flex-column">
-                        <div>Akhil Asaad</div>
+                        <div class="op-font text-light regular-font">{{comment.user.name}} {{comment.user.lastName}}</div>
                         <div>
-                            <i class="fa-star" *ngFor="let star of stars; let i = index" class="mr-2"
+                            <i class="accent-text mr-2 fa-star" *ngFor="let star of stars; let i = index"
                                 [ngClass]="(math.floor(comment.rating) > i) ? 'fas' : 'far'"></i>
                         </div>
-                        <div>
+                        <div class="op-font accent-text regular-font">
                             {{ comment.date | date: 'd - MMM - yyyy'}}
                         </div>
-                        <p>{{ comment.comment }}</p>
+                        <p class="op-font text-light regular-font">{{ comment.comment }}</p>
                     </div>
                 </div>
                 <div class="op-font text-light regular-font fs-20 my-4" *ngIf="computer.comments.length === 0">Todavía
                     no hay opiniones sobre esta computadora</div>
-                <div class="my-3">
+                <div class="my-3" *ngIf="canComment()">
                     <div class="op-font accent-text regular-font fs-24 mb-3">Contanos tu experiencia</div>
                     <div class="mb-3">
                         <i class="fa-star mr-2 accent-text" *ngFor="let star of opinionStars; let i = index"
@@ -145,7 +152,7 @@
                 </div>
             </div>
 
-            <div class="other-options-container d-flex flex-column align-items-center justify-content-center">
+            <!-- <div class="other-options-container d-flex flex-column align-items-center justify-content-center">
                 <div class="op-font accent-text regular-font brand-name my-4">Si no te convenció, tenemos otras opciones
                     para vos</div>
                 <div class="other-options d-flex align-items-center justify-content-around">
@@ -168,7 +175,7 @@
                             [routerLink]="['/computer', computer._id]">ver más</a>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

@@ -5,6 +5,7 @@ import { Computer, User } from '../models';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { Helpers } from '../services/helpers.service';
 
 @Component({
     selector: 'app-computers',
@@ -29,7 +30,8 @@ export class ComputersComponent implements OnInit {
         private router: Router,
         private computerService: ComputerService,
         private authService: AuthService,
-        private userService: UserService
+        private userService: UserService,
+        private helpers: Helpers,
     ) {
     }
 
@@ -52,10 +54,12 @@ export class ComputersComponent implements OnInit {
     }
 
     addComputerToFavourite(computerId) {
+        let adding = true;
         if (this.user.favouriteComputers && this.user.favouriteComputers.includes(computerId)) {
             if (this.user.favouriteComputers.indexOf(computerId) !== -1) {
                 this.user.favouriteComputers.splice(this.user.favouriteComputers.indexOf(computerId), 1);
             }
+            adding = false;
         } else {
             if (!this.user.favouriteComputers) {
                 this.user.favouriteComputers = [];
@@ -66,6 +70,8 @@ export class ComputersComponent implements OnInit {
         this.userService.addComputerToFavourites(this.user.favouriteComputers).subscribe(
             (user) => {
                 this.user = user;
+                // tslint:disable-next-line: max-line-length
+                this.helpers.openSnackBar((adding) ? 'La computadora se agregó a su lista de favoritos' : 'La computadora se quitó de su lista de favoritos');
             });
     }
 

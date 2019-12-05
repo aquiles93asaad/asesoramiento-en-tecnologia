@@ -1,1 +1,20 @@
-hola
+<div class="d-flex w-100 results-container">
+        <div class="w-100 h-100 d-flex justify-content-center align-items-center" *ngIf="!searchHistory">
+            <mat-progress-spinner class="" color="accent" diameter="50" mode="indeterminate">
+            </mat-progress-spinner>
+        </div>
+        <div *ngIf="searchHistory && searchHistory.length === 0" class="w-75 h-100 d-flex flex-column justify-content-center align-items-center">
+            <h2 class="op-font text-light regular-font title text-center mb-">No tiene ninguna búsqueda realizada anteriormente.</h2>
+            <button mat-stroked-button color="accent" class="op-font text-light light-font"
+            routerLink="/wizard">Empezar</button>
+        </div>
+        <div class="col-12 p-0 overflow-auto scroll-parent" *ngIf="searchHistory && searchHistory.length > 0">
+            <div *ngFor="let search of searchHistory; let first = first"
+                class="computer-container d-flex justify-content-start w-100 px-5 py-4 position-relative">
+                <button mat-icon-button class="trash-btn" color="accent" aria-label="Example icon-button"
+                    (click)="removeSearch(search._id)">
+                    <i class="far fa-trash-alt"></i>
+                </button>
+            </div>
+        </div>
+    </div>

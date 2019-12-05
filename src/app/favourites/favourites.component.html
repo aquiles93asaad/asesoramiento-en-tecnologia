@@ -1,7 +1,12 @@
 <div class="d-flex w-100 results-container">
-    <div class="h-100 d-flex justify-content-center align-items-center" *ngIf="!computers">
+    <div class="w-100 h-100 d-flex justify-content-center align-items-center" *ngIf="!computers">
         <mat-progress-spinner class="" color="accent" diameter="50" mode="indeterminate">
         </mat-progress-spinner>
+    </div>
+    <div *ngIf="computers && computers.length === 0" class="w-75 mx-auto h-100 d-flex flex-column justify-content-center align-items-center">
+        <h3 class="op-font text-light regular-font title text-center mb-4">No tiene ninguna computadora favorita, completa una aventura y elegi tus computadoras favoritas.</h3>
+        <button mat-stroked-button color="accent" class="op-font text-light light-font"
+        routerLink="/wizard">Empezar</button>
     </div>
     <div class="col-12 p-0 overflow-auto scroll-parent" *ngIf="computers && computers.length > 0">
         <div *ngFor="let computer of computers; let first = first"

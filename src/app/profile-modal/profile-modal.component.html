@@ -55,7 +55,7 @@
             <button mat-raised-button color="accent" class="d-flex justify-content-center mb-2" (click)="submitForm()"
                 [disabled]="!profileForm.valid && !isSubmitting">
                 <span *ngIf="!isSubmitting">Guardar</span>
-                <mat-progress-spinner class="py-2" color="accent" diameter="20" *ngIf="isSubmitting">
+                <mat-progress-spinner class="py-2" color="primary" diameter="20" mode="indeterminate" *ngIf="isSubmitting">
                 </mat-progress-spinner>
             </button>
         </div>

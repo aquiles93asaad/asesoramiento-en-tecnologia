@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Computer } from '../models';
 import { ComputerService } from '../services/computer.service';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation, NgxGalleryImageSize } from 'ngx-gallery';
+import { Helpers } from '../services/helpers.service';
 
 @Component({
     selector: 'app-computer-detail',
@@ -49,6 +50,7 @@ export class ComputerDetailComponent implements OnInit {
         private computerService: ComputerService,
         private authService: AuthService,
         private userService: UserService,
+        private helpers: Helpers,
     ) {
         this.computerService.get(this.route.snapshot.params.id).subscribe(
             (computer: Computer) => {
@@ -109,7 +111,7 @@ export class ComputerDetailComponent implements OnInit {
             // max-width 400
             {
                 breakpoint: 400,
-                preview: false
+                 preview: false
             }
         ];
     }
@@ -127,10 +129,12 @@ export class ComputerDetailComponent implements OnInit {
     }
 
     addComputerToFavourite(computerId) {
+        let adding = true;
         if (this.user.favouriteComputers && this.user.favouriteComputers.includes(computerId)) {
             if (this.user.favouriteComputers.indexOf(computerId) !== -1) {
                 this.user.favouriteComputers.splice(this.user.favouriteComputers.indexOf(computerId), 1);
             }
+            adding = false;
         } else {
             if (!this.user.favouriteComputers) {
                 this.user.favouriteComputers = [];
@@ -141,6 +145,8 @@ export class ComputerDetailComponent implements OnInit {
         this.userService.addComputerToFavourites(this.user.favouriteComputers).subscribe(
             (user) => {
                 this.user = user;
+                // tslint:disable-next-line: max-line-length
+                this.helpers.openSnackBar((adding) ? 'La computadora se agregó a su lista de favoritos' : 'La computadora se quitó de su lista de favoritos');
             });
     }
 
@@ -149,10 +155,40 @@ export class ComputerDetailComponent implements OnInit {
             this.opinion.date = new Date();
             this.opinion.user = this.user._id;
             this.computerService.addComment(this.opinion, this.computer._id).subscribe(
-                (result) => {
-                    console.log(result);
-                }
-            )
+                (computerUpdated) => {
+                    this.computer = computerUpdated;
+                    this.helpers.openSnackBar('Gracias por compartirnos tu opinión');
+                },
+                error => {
+                    this.helpers.openErrorSnackBar(error);
+                    console.log(error);
+                },
+            );
+        }
+    }
+
+    removeComment(commentId) {
+        this.computerService.removeComment(commentId, this.computer._id).subscribe(
+            (computerUpdated) => {
+                this.computer = computerUpdated;
+                this.helpers.openSnackBar('Su comentario se eliminó');
+            },
+            error => {
+                this.helpers.openErrorSnackBar(error);
+                console.log(error);
+            },
+        );
+    }
+
+    canComment() {
+        if (!this.user) {
+            return false;
+        } else {
+            const cant = this.computer.comments.some(comment => {
+                return comment.user._id === this.user._id;
+            });
+
+            return !cant;
         }
     }
 
