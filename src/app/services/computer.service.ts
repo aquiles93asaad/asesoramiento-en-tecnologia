@@ -62,7 +62,8 @@ export class ComputerService {
             answers: params.answers,
             usageProfiles: params.usageProfiles,
             type: params.type,
-            isNewSearch: params.isNewSearch
+            isNewSearch: params.isNewSearch,
+            userId: params.userId
         }).pipe(
             map(
                 (data: any) => {

@@ -33,6 +33,7 @@ import { DragAndDropComponent } from './drag-and-drop/drag-and-drop.component';
 import { ProfileModalComponent } from './profile-modal/profile-modal.component';
 import { ComputerDetailComponent } from './computer-detail/computer-detail.component';
 import { FavouritesComponent } from './favourites/favourites.component';
+import { SearchHistoryComponent } from './search-history/search-history.component';
 
 export class CustomHammerConfig extends HammerGestureConfig  {
     overrides = {
@@ -51,7 +52,8 @@ export class CustomHammerConfig extends HammerGestureConfig  {
         DragAndDropComponent,
         ProfileModalComponent,
         ComputerDetailComponent,
-        FavouritesComponent
+        FavouritesComponent,
+        SearchHistoryComponent
     ],
     imports: [
         BrowserModule,

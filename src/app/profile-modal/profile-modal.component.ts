@@ -44,6 +44,13 @@ export class ProfileModalComponent implements OnInit {
     }
 
     submitForm() {
+        if ((this.profileForm.get('passwords').get('password').value || this.profileForm.get('passwords').get('repeat').value) 
+            && !this.profileForm.get('oldPassword').value) {
+            this.profileForm.get('oldPassword').setErrors({ required: true });
+            this.helpers.openErrorSnackBar('Debe ingresar la contraseña actual');
+            return;
+        }
+
         if (this.user._id) {
             // tslint:disable-next-line: prefer-const
             this.isSubmitting = true;

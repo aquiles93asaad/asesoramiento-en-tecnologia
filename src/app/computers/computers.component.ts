@@ -121,7 +121,8 @@ export class ComputersComponent implements OnInit {
             answers,
             usageProfiles,
             type: this.computerType,
-            isNewSearch: false
+            isNewSearch: false,
+            userId: (this.user) ? this.user._id : null
         };
 
         if (this.user && JSON.parse(localStorage.getItem('new_wizard_search'))) {

@@ -63,4 +63,18 @@ export class UserService {
             )
         );
     }
+
+    getUserSearchHistory(): Observable<any> {
+        return this.http.get(environment.baseUrl + 'search-history/user-search-history').pipe(
+            map(
+                (data: any) => {
+                    if (data.searchHistory) {
+                        return data.searchHistory;
+                    }
+
+                    throw new HttpErrorResponse({ status: 401, statusText: data.errorMessage, error: data.errorType });
+                }
+            )
+        );
+    }
 }
