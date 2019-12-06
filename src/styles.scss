@@ -6,6 +6,10 @@ $grey-color: #707070;
 $danger: #DB554D;
 
 body {
+    @media screen and (min-width: 992px) {
+        height: 100%;
+    }
+
     .op-font {
         font-family: 'Segoe UI', 'Open Sans', Tahoma, Geneva, Verdana, sans-serif;
     }

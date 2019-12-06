@@ -1,12 +1,17 @@
 .main-bg {
-    background-color: linear-gradient(to right bottom, #201830, #1f172f, #1e162d, #1d162c, #1c152b, #1b1429, #1a1427, #191325, #171222, #161220, #15111d, #13101a);
+    background: #16121D 0% 0% no-repeat padding-box;
     min-height: 100%;
-    // @media screen and (min-width: 992px) {
+    background-repeat: no-repeat;
+    @media screen and (min-width: 992px) {
         background-image: url('../assets/bg.png');
         background-repeat: no-repeat;
         // background-position-x: unset;
         background-position: center;
-    // }
+    }
+
+    @media(max-width: 992px) {
+        min-height: 670px;
+    }
 
     nav {
         background-color: transparent;
@@ -47,5 +52,9 @@
 
     .main-container {
         height: calc(100% - 60px);
+
+        @media(max-width: 992px) {
+            min-height: 660px;
+        }
     }
 }

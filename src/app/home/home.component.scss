@@ -26,6 +26,12 @@
     }
 }
 
+.home-div {
+    @media(max-width: 992px) {
+        min-height: 660px;
+    }
+}
+
 .computers-image {
     width: 50%;
     bottom: 0px;
